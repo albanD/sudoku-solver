@@ -5,24 +5,24 @@ TARGET = build/TestSudoku
 LIBRARY = build/libSudokuSolver.so
 
 SOURCES_LIB = $(wildcard src/*.cpp)
-INLCUDE_LIB = include
-INLCUDE_LIB_ARG = $(foreach d, $(INLCUDE_LIB), -I$d)
+INCLUDE_LIB = include
+INCLUDE_LIB_ARG = $(foreach d, $(INCLUDE_LIB), -I$d)
 OBJECTS_LIB = $(SOURCES_LIB:.cpp=.o)
-CSHAREDFLAGS = -c -fPIC $(INLCUDE_LIB_ARG)
+CSHAREDFLAGS = -c -fPIC $(INCLUDE_LIB_ARG)
 LDSHAREDFLAGS = -shared
 
 SOURCES_TEST = $(wildcard test/*.cpp)
-INLCUDE_TEST = test $(INLCUDE_LIB)
-INLCUDE_TEST_ARG = $(foreach d, $(INLCUDE_TEST), -I$d)
+INCLUDE_TEST = test $(INCLUDE_LIB)
+INCLUDE_TEST_ARG = $(foreach d, $(INCLUDE_TEST), -I$d)
 OBJECTS_TEST = $(SOURCES_TEST:.cpp=.o)
-CFLAGS = -c -Wall -g -O $(INLCUDE_TEST_ARG)
+CFLAGS = -c -Wall -g -O $(INCLUDE_TEST_ARG)
 LDFLAGS = -Lbuild -lSudokuSolver -lstdc++
 
 
 all: $(LIBRARY) $(TARGET)
 
-$(OBJECTS_LIB): $(SOURCES_LIB)
-	$(GCC) $(CSHAREDFLAGS) $^ -o $@
+%.o: %.cpp
+	$(GCC) $(CSHAREDFLAGS) $< -o $@
 
 $(OBJECTS_TEST): $(SOURCES_TEST)
 	$(GCC) $(CFLAGS) $^ -o $@
