@@ -6,7 +6,12 @@ pushd build
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)
 
 echo "####### Starting TestSudoku #######"
-./TestSudoku
-echo "#######         Done        #######"
+if ./TestSudoku; then
+    echo "#######         Done        #######"
+    echo "All test passing"
+else
+    echo "Program exited with error code"
+fi
+
 
 popd
