@@ -7,6 +7,7 @@ class Cell {
 public:
     int value;
 
+    Cell();
     Cell(int x);
 };
 
