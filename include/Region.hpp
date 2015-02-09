@@ -5,7 +5,7 @@
 #define REGION_HPP
 
 class Region {
-private:
+public:
         Cell N;
         Cell S;
         Cell E;
@@ -15,9 +15,11 @@ private:
         Cell NO;
         Cell SO;
         Cell C;
-
-public:
         Region(std::string init_string);
+
+private:
+        Cell generate_cell(std::string::iterator iter);
+
 };
 
 
