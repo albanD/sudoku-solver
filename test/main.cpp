@@ -2,10 +2,24 @@
 #include <stdexcept>
 
 #include "Cell.hpp"
+#include "Region.hpp"
 
 using namespace std;
 
+int check_cells_methods();
+int check_region_methods();
+
 int main() {
+    int error_happened = 0;
+
+    error_happened += check_cells_methods();
+    error_happened += check_region_methods();
+
+    return 0;
+}
+
+
+int check_cells_methods() {
 
     // Check that the default Cell Constructor works properly
     Cell myCell = Cell(8);
@@ -15,7 +29,7 @@ int main() {
     bool exception_raised = false;
     try {
         Cell myCell = Cell(12);
-    } catch(std::domain_error const& e) {
+    } catch(domain_error const& e) {
         cout<<"Caught an exception as expected" <<endl;
         exception_raised = true;
     }
@@ -24,7 +38,11 @@ int main() {
         cerr << "No exception was raised"<< endl;
         return 1;
     }
+    return 0;
 
+}
 
+int check_region_methods() {
+    Region myRegion = Region("123456789");
     return 0;
 }
