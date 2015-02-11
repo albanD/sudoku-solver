@@ -9,6 +9,7 @@ public:
 
     Cell();
     Cell(int x);
+    bool isEmpty();
 };
 
 #endif
