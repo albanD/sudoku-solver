@@ -1,5 +1,6 @@
 #include "Cell.hpp"
 #include <string>
+#include <array>
 
 #ifndef REGION_HPP
 #define REGION_HPP
@@ -29,6 +30,6 @@ public:
         std::array<std::array<Region,3>,3> regions;
 
         Grid(std::array<std::array<Region,3>,3> regions);
-}
+};
 
 #endif
