@@ -23,3 +23,7 @@ Cell & Cell::operator=(unsigned char iValue) {
     }
     value = iValue;
 }
+
+Cell::operator unsigned char() const{
+    return  (unsigned char) value;
+}

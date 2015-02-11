@@ -11,6 +11,7 @@ public:
     Cell(int x);
     bool isEmpty();
     Cell & operator =(unsigned char iValue);
+    operator unsigned char () const;
 };
 
 #endif

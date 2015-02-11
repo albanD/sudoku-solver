@@ -48,6 +48,10 @@ int check_cells_methods() {
     cout << "myCell2 value is "<< myCell2.value << " should be 3"<<endl;
     errors += myCell2.value!=3;
 
+    unsigned char cell_value = (unsigned char) myCell2;
+    cout <<"Casting myCell2 gives a char of value: "<<(int) cell_value << " should be 3"<<endl;
+    errors += cell_value!=3;
+
     return errors;
 
 }
