@@ -1,3 +1,5 @@
 build/
-src/*.o
-test/*.o
+*.o
+*GPATH
+*GRTAGS
+*GTAGS
