@@ -18,5 +18,8 @@ bool Cell::isEmpty(){
 }
 
 Cell & Cell::operator=(unsigned char iValue) {
+    if (iValue>9 || iValue<1) {
+        throw std::invalid_argument("The value in a Cell must be between 0 and 9.");
+    }
     value = iValue;
 }

@@ -4,6 +4,7 @@
 #include "Region.hpp"
 
 using namespace std;
+Region::Region(){}
 
 Region::Region(string init_string) {
         if (init_string.length() != 9) {
