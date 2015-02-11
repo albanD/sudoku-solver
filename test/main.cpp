@@ -48,9 +48,19 @@ int check_cells_methods() {
     cout << "myCell2 value is "<< myCell2.value << " should be 3"<<endl;
     errors += myCell2.value!=3;
 
+    // Check that the overloaded cast works
     unsigned char cell_value = (unsigned char) myCell2;
     cout <<"Casting myCell2 gives a char of value: "<<(int) cell_value << " should be 3"<<endl;
     errors += cell_value!=3;
+
+    // Check that the overloaded Comparison operator works
+    bool true_eq = (myCell2==(unsigned char)3);
+    bool false_eq = (myCell2==(unsigned char)4);
+    cout << "myCell2==3 returns "<< true_eq << " should be 1"<<endl;
+    cout << "myCell2==4 returns "<< false_eq << " should be 0"<<endl;
+    errors += (true_eq!=true);
+    errors += (false_eq!=false);
+
 
     return errors;
 

@@ -27,3 +27,7 @@ Cell & Cell::operator=(unsigned char iValue) {
 Cell::operator unsigned char() const{
     return  (unsigned char) value;
 }
+
+bool Cell::operator ==(unsigned char iValue){
+    return (unsigned char) value == iValue;
+}
