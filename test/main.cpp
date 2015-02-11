@@ -20,10 +20,12 @@ int main() {
 
 
 int check_cells_methods() {
+    int errors = 0;
 
     // Check that the default Cell Constructor works properly
     Cell myCell = Cell(8);
-    cout << myCell.value << endl;
+    cout << "myCell value is "<< myCell.value << " should be 8"<<endl;
+    errors += myCell.value!=8;
 
     // Check that an exception is raised in case of bad value
     bool exception_raised = false;
@@ -36,9 +38,17 @@ int check_cells_methods() {
 
     if(not exception_raised) {
         cerr << "No exception was raised for the cells"<< endl;
-        return 1;
+        errors++;
     }
-    return 0;
+
+
+    // Check that the overloaded affectation operator works
+    Cell myCell2 = Cell();
+    myCell2 = 3;
+    cout << "myCell2 value is "<< myCell2.value << " should be 3"<<endl;
+    errors += myCell2.value!=3;
+
+    return errors;
 
 }
 

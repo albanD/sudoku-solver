@@ -16,3 +16,7 @@ Cell::Cell(int x){
 bool Cell::isEmpty(){
     return value==0;
 }
+
+Cell & Cell::operator=(unsigned char iValue) {
+    value = iValue;
+}

@@ -10,6 +10,7 @@ public:
     Cell();
     Cell(int x);
     bool isEmpty();
+    Cell & operator =(unsigned char iValue);
 };
 
 #endif
