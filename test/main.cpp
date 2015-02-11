@@ -46,7 +46,7 @@ int check_region_methods() {
 
     // Check the happy path
     Region myRegion = Region("123456789");
-    cout << "The value of the topmost-rightmost is "<< myRegion.NO.value <<", supposed to be 1." <<endl;
+    cout << "The value of the topmost-leftmost is "<< myRegion.NO.value <<", supposed to be 1." <<endl;
 
     // Check that an exception triggers
     bool exception_raised = false;
