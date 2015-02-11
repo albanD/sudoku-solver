@@ -33,8 +33,6 @@ Cell Region::generate_cell(string::iterator iter) {
         Cell new_cell;
         if(s_value == '-') {
                 new_cell = Cell();
-        } else if(s_value =='0'){ // We don't accept 0 in the Sudoku
-                throw domain_error("The value is not admissible for a Sudoku Cell");
         } else { // stoi is going to throw an invalid_argument exception for every value we don't want.
                 int value = stoi(&s_value, nullptr, 10);
                 new_cell = Cell(value);

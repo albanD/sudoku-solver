@@ -15,7 +15,7 @@ int main() {
     error_happened += check_cells_methods();
     error_happened += check_region_methods();
 
-    return 0;
+    return error_happenedf;
 }
 
 
