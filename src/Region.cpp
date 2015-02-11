@@ -39,3 +39,8 @@ Cell Region::generate_cell(string::iterator iter) {
         }
         return new_cell;
 }
+
+
+Grid::Grid(array<array<Region,3>,3> regions) {
+        this->regions = regions;
+}
