@@ -17,7 +17,7 @@ public:
         Cell SO;
         Cell C;
         Region(std::string init_string);
-
+        Region();
 private:
         Cell generate_cell(std::string::iterator iter);
 
