@@ -15,7 +15,7 @@ int main() {
     error_happened += check_cells_methods();
     error_happened += check_region_methods();
 
-    return error_happenedf;
+    return error_happened;
 }
 
 
@@ -29,7 +29,7 @@ int check_cells_methods() {
     bool exception_raised = false;
     try {
         Cell myCell = Cell(12);
-    } catch(domain_error const& e) {
+    } catch(invalid_argument const& e) {
         cout<<"Caught a cell exception as expected" <<endl;
         exception_raised = true;
     }
