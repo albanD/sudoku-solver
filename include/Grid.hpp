@@ -9,10 +9,10 @@ using namespace std;
 
 class Grid {
 private:
-        std::array<std::array<Region,3>,3> regions;
+        array<array<Region,3>,3> regions;
 
 public:
-        Grid(std::array<std::array<Region,3>,3> regions);
+        Grid(array<array<Region,3>,3> regions);
         bool isFull();
         RegionHolder NO();
         RegionHolder N();
