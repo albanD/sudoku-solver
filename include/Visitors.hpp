@@ -1,3 +1,4 @@
+#include "Grid.hpp"
 #ifndef VISITORS
 #define VISITORS
 
