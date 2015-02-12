@@ -3,6 +3,7 @@
 
 #include "Cell.hpp"
 #include "Region.hpp"
+#include "Holder.hpp"
 
 using namespace std;
 
@@ -23,9 +24,9 @@ int check_cells_methods() {
     int errors = 0;
 
     // Check that the default Cell Constructor works properly
-    Cell myCell = Cell(8);
-    cout << "myCell value is "<< myCell.value << " should be 8"<<endl;
-    errors += myCell.value!=8;
+    Cell myCell1 = Cell(8);
+    cout << "myCell1 value is "<< myCell1.value << " should be 8"<<endl;
+    errors += myCell1.value!=8;
 
     // Check that an exception is raised in case of bad value
     bool exception_raised = false;
@@ -61,6 +62,12 @@ int check_cells_methods() {
     errors += (true_eq!=true);
     errors += (false_eq!=false);
 
+
+    Cell myCell3 = Cell(2);
+
+    TripleHolder triplet(&myCell1, &myCell2, &myCell3);
+    cout << "Value of the first cell of the triplet is: "<<triplet.getFirst()->value<<" should be 8"<<endl;
+    errors += (triplet.getFirst()->value!=8);
 
     return errors;
 
