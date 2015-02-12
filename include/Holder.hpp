@@ -40,7 +40,7 @@ public:
 
 class RegionHolder{
 public:
-        RegionHolder(Region region);
+        RegionHolder(Region &region);
 
         Cell* getNO() const;
         Cell* getN() const;

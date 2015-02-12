@@ -6,8 +6,7 @@
 using namespace std;
 
 LastCellFinder::LastCellFinder(TripleHolder h1, TripleHolder h2, TripleHolder h3){
-        array<TripleHolder,3> holders = {h1,h2,h3};
-
+        holders = {h1,h2,h3};
 }
 
 bool LastCellFinder::fill(){
@@ -24,7 +23,7 @@ bool LastCellFinder::fill(){
                         empty_pos = 1;
                         nb_empty++;
                 } else{
-                        int pos = (int)*holders[i].getFirst() -1;
+                        int pos =(int) *(holders[i].getFirst()) -1;
                         index[pos] = true;
                 }
 
@@ -34,7 +33,7 @@ bool LastCellFinder::fill(){
                         empty_pos = 2;
                         nb_empty++;
                 } else{
-                        int pos = (int)* holders[i].getFirst() -1;
+                        int pos =(int) *(holders[i].getSecond()) -1;
                         index[pos] = true;
                 }
 
@@ -44,9 +43,11 @@ bool LastCellFinder::fill(){
                         empty_pos = 3;
                         nb_empty++;
                 } else{
-                        int pos = (int)* holders[i].getFirst() -1;
+
+                        int pos = (int) *(holders[i].getThird()) -1;
                         index[pos] = true;
                 }
+
         }
         int missing_value;
         if(nb_empty!=1){

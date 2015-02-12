@@ -36,19 +36,24 @@ int check_last_cell_finder() {
     RegionHolder true_holder = RegionHolder(myRegion_true);
     RegionHolder false_holder = RegionHolder(myRegion_false);
 
-    LastCellFinder lf_true = LastCellFinder(true_holder.topRow(),
-                                            true_holder.middleRow(),
-                                            true_holder.bottomRow());
-
-    LastCellFinder lf_false = LastCellFinder(false_holder.topRow(),
-                                             false_holder.middleRow(),
-                                             false_holder.bottomRow());
+    LastCellFinder lf_true(true_holder.topRow(),
+                           true_holder.middleRow(),
+                           true_holder.bottomRow());
+    LastCellFinder lf_false(false_holder.topRow(),
+                            false_holder.middleRow(),
+                            false_holder.bottomRow());
 
     bool true_res = lf_true.fill();
-    bool false_res = lf_false.fill();
     cout<<"Filling out true_holder resulted in "<<true_res<<" should be 1"<<endl;
-    cout<<"Filling out false_holder resulted in "<<false_res<<" should be 0"<<endl;
+    cout<<"Value in true that should have been filled out: "<<myRegion_true.SE.value<<" should have been 9"<<endl;
+    errors += (true_res!=true);
+    errors += (myRegion_true.SE.value!=9);
 
+    bool false_res = lf_false.fill();
+    cout<<"Filling out false_holder resulted in "<<false_res<<" should be 0"<<endl;
+    cout<<"Empty value is still empty "<<myRegion_false.SE.isEmpty()<<" should be 1"<<endl;
+    errors += (false_res!=false);
+    errors += (myRegion_false.SE.isEmpty()!=true);
 
     return errors;
 }

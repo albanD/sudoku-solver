@@ -35,7 +35,7 @@ Cell* ColumnHolder::T(){return getFirst();}
 Cell* ColumnHolder::C(){return getSecond();}
 Cell* ColumnHolder::B(){return getThird();}
 
-RegionHolder::RegionHolder(Region region){
+RegionHolder::RegionHolder(Region &region){
         NO = &(region.NO);
         N = &(region.N);
         NE = &(region.NE);
