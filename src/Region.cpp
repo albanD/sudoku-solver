@@ -41,6 +41,15 @@ Cell Region::generate_cell(string::iterator iter) {
         return new_cell;
 }
 
+bool Region::isFull(){
+        bool has_empty_cases = false;
+        has_empty_cases = has_empty_cases || NO.isEmpty() || N.isEmpty() || NE.isEmpty();
+        has_empty_cases = has_empty_cases || O.isEmpty() || C.isEmpty() || E.isEmpty();
+        has_empty_cases = has_empty_cases || SO.isEmpty() || S.isEmpty()  || SE.isEmpty();
+
+        return not has_empty_cases;
+}
+
 
 Grid::Grid(array<array<Region,3>,3> regions) {
         this->regions = regions;

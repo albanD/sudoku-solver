@@ -68,9 +68,14 @@ int check_cells_methods() {
 
 int check_region_methods() {
 
+    int errors = 0;
+
     // Check the happy path
     Region myRegion = Region("123456789");
     cout << "The value of the topmost-leftmost is "<< myRegion.NO.value <<", supposed to be 1." <<endl;
+    if(myRegion.NO.value!=1){
+        errors++;
+    }
 
     // Check that an exception triggers
     bool exception_raised = false;
@@ -83,7 +88,17 @@ int check_region_methods() {
 
     if(not exception_raised) {
         cerr << "No exception was raised for the Region"<<endl;
-        return 1;
+        errors++;
     }
-    return 0;
+
+    Region myRegion2 = Region("12345678-");
+    cout<< "myRegion is Full: "<< myRegion.isFull() <<" should be 1"<<endl;
+    cout<< "myRegion2 is Full: "<< myRegion2.isFull() << " should be 0"<<endl;
+    errors += (myRegion.isFull()!=true);
+    errors += (myRegion2.isFull()!=false);
+
+
+    return errors;
+
+
 }
