@@ -14,4 +14,17 @@ public:
         OnlyOneChoiceInRowVisitor();
 };
 
+class OnlyOneChoiceInColumnVisitor : public IVisitor{
+public:
+        virtual bool Visit(Grid &ioGrid) const;
+        OnlyOneChoiceInColumnVisitor();
+};
+
+class OnlyOneChoiceInRegionVisitor : public IVisitor{
+public:
+        virtual bool Visit(Grid &ioGrid) const;
+        OnlyOneChoiceInRegionVisitor();
+};
+
+
 #endif

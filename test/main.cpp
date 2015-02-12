@@ -75,11 +75,25 @@ int check_full_sudoku(){
         Region("763928154"), Region("534671938"), Region("18935467-")
     };
 
-    Grid myGrid(content);
-    OnlyOneChoiceInRowVisitor visitor;
-    myGrid.accept(&visitor);
-    cout<<"Previously empty Cell is now: "<<myGrid.SE().getSE()->value<<" should be 2"<<endl;
-    errors += (myGrid.SE().getSE()->value!=2);
+    Grid myGrid_row(content);
+    OnlyOneChoiceInRowVisitor row_visitor;
+    myGrid_row.accept(&row_visitor);
+    cout<<"Row - Previously empty Cell is now: "<<myGrid_row.SE().getSE()->value<<" should be 2"<<endl;
+    errors += (myGrid_row.SE().getSE()->value!=2);
+
+
+    Grid myGrid_col(content);
+    OnlyOneChoiceInColumnVisitor col_visitor;
+    myGrid_col.accept(&col_visitor);
+    cout<<"Col - Previously empty Cell is now: "<<myGrid_col.SE().getSE()->value<<" should be 2"<<endl;
+    errors += (myGrid_col.SE().getSE()->value!=2);
+
+    Grid myGrid_reg(content);
+    OnlyOneChoiceInRegionVisitor reg_visitor;
+    myGrid_reg.accept(&reg_visitor);
+    cout<<"Reg - Previously empty Cell is now: "<<myGrid_reg.SE().getSE()->value<<" should be 2"<<endl;
+    errors += (myGrid_reg.SE().getSE()->value!=2);
+
 
     return errors;
 
