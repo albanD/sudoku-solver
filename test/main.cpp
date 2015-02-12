@@ -3,6 +3,7 @@
 
 #include "Cell.hpp"
 #include "Region.hpp"
+#include "Holder.hpp"
 
 using namespace std;
 
@@ -23,14 +24,23 @@ int check_cells_methods() {
     int errors = 0;
 
     // Check that the default Cell Constructor works properly
-    Cell myCell = Cell(8);
-    cout << "myCell value is "<< myCell.value << " should be 8"<<endl;
-    errors += myCell.value!=8;
+    Cell myCell1 = Cell(8);
+    cout << "myCell1 value is "<< myCell1.value << " should be 8"<<endl;
+    errors += myCell1.value!=8;
 
     // Check that an exception is raised in case of bad value
     bool exception_raised = false;
+    Cell myCell;
     try {
-        Cell myCell = Cell(12);
+        myCell = Cell(12);
+    } catch(invalid_argument const& e) {
+        cout<<"Caught a cell exception as expected" <<endl;
+        exception_raised = true;
+    }
+    // Check that the equal sign raises the same exception
+    try {
+        myCell = Cell(0);
+        myCell.value = 12;
     } catch(invalid_argument const& e) {
         cout<<"Caught a cell exception as expected" <<endl;
         exception_raised = true;
@@ -62,6 +72,24 @@ int check_cells_methods() {
     errors += (false_eq!=false);
 
 
+    Cell myCell3 = Cell(2);
+
+    TripleHolder triplet(&myCell1, &myCell2, &myCell3);
+    cout << "Value of the first cell of the triplet is: "<<triplet.getFirst()->value<<" should be 8"<<endl;
+    errors += (triplet.getFirst()->value!=8);
+
+
+    RowHolder row(&myCell1, &myCell2, &myCell3);
+    cout << "Value of the left cell of the row is: "<<row.G()->value<<" should be 8"<<endl;
+    errors += (row.G()->value!=8);
+
+
+    ColumnHolder col(&myCell1, &myCell2, &myCell3);
+    cout << "Value of the top cell of the col is: "<<col.T()->value<<" should be 8"<<endl;
+    errors += (col.T()->value!=8);
+
+
+
     return errors;
 
 }
@@ -81,6 +109,7 @@ int check_region_methods() {
     bool exception_raised = false;
     try {
         Region myRegion = Region("12345-------");
+        myRegion.isFull(); // Use the myRegion variable to prevent compilation warning
     } catch(invalid_argument const& e) {
         cout << "Caught a Region exception as expected" <<endl;
         exception_raised = true;
@@ -96,6 +125,10 @@ int check_region_methods() {
     cout<< "myRegion2 is Full: "<< myRegion2.isFull() << " should be 0"<<endl;
     errors += (myRegion.isFull()!=true);
     errors += (myRegion2.isFull()!=false);
+
+    RegionHolder rh = RegionHolder(myRegion2);
+    cout<< "Topmost-leftmost of the region holded is " << rh.getNO()->value << " should be 1"<<endl;
+    errors += (rh.getNO()->value!=1);
 
 
     return errors;
