@@ -1,7 +1,7 @@
 #include "Region.hpp"
 #include "Holder.hpp"
 #include "Grid.hpp"
-
+#include "Visitors.hpp"
 #include <array>
 
 
@@ -29,3 +29,8 @@ RegionHolder Grid::E(){return RegionHolder(regions[1][2]);}
 RegionHolder Grid::SO(){return RegionHolder(regions[2][0]);}
 RegionHolder Grid::S(){return RegionHolder(regions[2][1]);}
 RegionHolder Grid::SE(){return RegionHolder(regions[2][2]);}
+
+
+void Grid::accept(IVisitor* v){
+        v->Visit(*this);
+};
