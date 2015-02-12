@@ -46,3 +46,13 @@ RegionHolder::RegionHolder(Region region){
         S = &(region.S);
         SE = &(region.SE);
 }
+
+Cell* RegionHolder::getNO(){return NO;}
+Cell* RegionHolder::getN(){return N;}
+Cell* RegionHolder::getNE(){return NE;}
+Cell* RegionHolder::getO(){return O;}
+Cell* RegionHolder::getC(){return C;}
+Cell* RegionHolder::getE(){return E;}
+Cell* RegionHolder::getSO(){return SO;}
+Cell* RegionHolder::getS(){return S;}
+Cell* RegionHolder::getSE(){return SE;}

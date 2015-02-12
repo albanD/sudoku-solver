@@ -117,6 +117,9 @@ int check_region_methods() {
     errors += (myRegion2.isFull()!=false);
 
     RegionHolder rh = RegionHolder(myRegion2);
+    cout<< "Topmost-leftmost of the region holded is " << rh.getNO()->value << " should be 1"<<endl;
+    errors += (rh.getNO()->value!=1);
+
 
     return errors;
 

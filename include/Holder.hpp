@@ -41,6 +41,17 @@ public:
 class RegionHolder{
 public:
         RegionHolder(Region region);
+
+        Cell* getNO();
+        Cell* getN();
+        Cell* getNE();
+        Cell* getO();
+        Cell* getC();
+        Cell* getE();
+        Cell* getSO();
+        Cell* getS();
+        Cell* getSE();
+
 private:
         Cell* NO;
         Cell* N;
