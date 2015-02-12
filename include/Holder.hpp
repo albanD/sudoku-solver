@@ -2,6 +2,7 @@
 #define HOLDER_HPP
 
 #include "Cell.hpp"
+#include "Region.hpp"
 
 class TripleHolder{
 public:
@@ -34,6 +35,22 @@ public:
         Cell* T();
         Cell* C();
         Cell* B();
+};
+
+
+class RegionHolder{
+public:
+        RegionHolder(Region region);
+private:
+        Cell* NO;
+        Cell* N;
+        Cell* NE;
+        Cell* O;
+        Cell* C;
+        Cell* E;
+        Cell* SO;
+        Cell* S;
+        Cell* SE;
 };
 
 #endif

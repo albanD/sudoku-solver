@@ -116,6 +116,7 @@ int check_region_methods() {
     errors += (myRegion.isFull()!=true);
     errors += (myRegion2.isFull()!=false);
 
+    RegionHolder rh = RegionHolder(myRegion2);
 
     return errors;
 

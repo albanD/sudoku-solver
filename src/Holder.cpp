@@ -1,5 +1,6 @@
 #include "Holder.hpp"
 #include "Cell.hpp"
+#include "Region.hpp"
 
 TripleHolder::TripleHolder(){};
 
@@ -33,3 +34,15 @@ ColumnHolder::ColumnHolder(Cell* t, Cell* c, Cell* b){
 Cell* ColumnHolder::T(){return getFirst();}
 Cell* ColumnHolder::C(){return getSecond();}
 Cell* ColumnHolder::B(){return getThird();}
+
+RegionHolder::RegionHolder(Region region){
+        NO = &(region.NO);
+        N = &(region.N);
+        NE = &(region.NE);
+        O = &(region.O);
+        C = &(region.C);
+        E = &(region.E);
+        SO = &(region.SO);
+        S = &(region.S);
+        SE = &(region.SE);
+}
