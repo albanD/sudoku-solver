@@ -20,10 +20,12 @@ int main() {
 
 
 int check_cells_methods() {
+    int errors = 0;
 
     // Check that the default Cell Constructor works properly
     Cell myCell = Cell(8);
-    cout << myCell.value << endl;
+    cout << "myCell value is "<< myCell.value << " should be 8"<<endl;
+    errors += myCell.value!=8;
 
     // Check that an exception is raised in case of bad value
     bool exception_raised = false;
@@ -36,17 +38,44 @@ int check_cells_methods() {
 
     if(not exception_raised) {
         cerr << "No exception was raised for the cells"<< endl;
-        return 1;
+        errors++;
     }
-    return 0;
+
+
+    // Check that the overloaded affectation operator works
+    Cell myCell2 = Cell();
+    myCell2 = 3;
+    cout << "myCell2 value is "<< myCell2.value << " should be 3"<<endl;
+    errors += myCell2.value!=3;
+
+    // Check that the overloaded cast works
+    unsigned char cell_value = (unsigned char) myCell2;
+    cout <<"Casting myCell2 gives a char of value: "<<(int) cell_value << " should be 3"<<endl;
+    errors += cell_value!=3;
+
+    // Check that the overloaded Comparison operator works
+    bool true_eq = (myCell2==(unsigned char)3);
+    bool false_eq = (myCell2==(unsigned char)4);
+    cout << "myCell2==3 returns "<< true_eq << " should be 1"<<endl;
+    cout << "myCell2==4 returns "<< false_eq << " should be 0"<<endl;
+    errors += (true_eq!=true);
+    errors += (false_eq!=false);
+
+
+    return errors;
 
 }
 
 int check_region_methods() {
 
+    int errors = 0;
+
     // Check the happy path
     Region myRegion = Region("123456789");
     cout << "The value of the topmost-leftmost is "<< myRegion.NO.value <<", supposed to be 1." <<endl;
+    if(myRegion.NO.value!=1){
+        errors++;
+    }
 
     // Check that an exception triggers
     bool exception_raised = false;
@@ -59,7 +88,17 @@ int check_region_methods() {
 
     if(not exception_raised) {
         cerr << "No exception was raised for the Region"<<endl;
-        return 1;
+        errors++;
     }
-    return 0;
+
+    Region myRegion2 = Region("12345678-");
+    cout<< "myRegion is Full: "<< myRegion.isFull() <<" should be 1"<<endl;
+    cout<< "myRegion2 is Full: "<< myRegion2.isFull() << " should be 0"<<endl;
+    errors += (myRegion.isFull()!=true);
+    errors += (myRegion2.isFull()!=false);
+
+
+    return errors;
+
+
 }

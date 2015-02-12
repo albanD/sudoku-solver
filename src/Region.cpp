@@ -4,6 +4,7 @@
 #include "Region.hpp"
 
 using namespace std;
+Region::Region(){}
 
 Region::Region(string init_string) {
         if (init_string.length() != 9) {
@@ -38,4 +39,28 @@ Cell Region::generate_cell(string::iterator iter) {
                 new_cell = Cell(value);
         }
         return new_cell;
+}
+
+bool Region::isFull(){
+        bool has_empty_cases = false;
+        has_empty_cases = has_empty_cases || NO.isEmpty() || N.isEmpty() || NE.isEmpty();
+        has_empty_cases = has_empty_cases || O.isEmpty() || C.isEmpty() || E.isEmpty();
+        has_empty_cases = has_empty_cases || SO.isEmpty() || S.isEmpty()  || SE.isEmpty();
+
+        return not has_empty_cases;
+}
+
+Grid::Grid(array<array<Region,3>,3> regions) {
+        this->regions = regions;
+}
+
+bool Grid::isFull(){
+        for(array<array<Region,3>,3>::iterator liter=regions.begin(),lend=regions.end();liter!=lend;++liter){
+                for(array<Region,3>::iterator citer=liter->begin(),cend=liter->end(); citer!=cend; ++citer){
+                        if (not citer->isFull()){
+                                return false;
+                        }
+                }
+        }
+        return true;
 }
