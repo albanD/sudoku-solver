@@ -5,12 +5,15 @@
 #include "Region.hpp"
 #include "Holder.hpp"
 #include "LastCellFinder.hpp"
+#include "Grid.hpp"
+#include "Visitors.hpp"
 
 using namespace std;
 
 int check_cells_methods();
 int check_region_methods();
 int check_last_cell_finder();
+int check_full_sudoku();
 
 int main() {
     int error_happened = 0;
@@ -23,6 +26,9 @@ int main() {
 
     cout<<endl<<"Starting to check LastCellFinder methods:"<<endl;
     error_happened += check_last_cell_finder();
+
+    cout<<endl<<"Starting to check Full Sudokus methods:"<<endl;
+    error_happened += check_full_sudoku();
 
     return error_happened;
 }
@@ -56,6 +62,27 @@ int check_last_cell_finder() {
     errors += (myRegion_false.SE.isEmpty()!=true);
 
     return errors;
+}
+
+int check_full_sudoku(){
+    int errors = 0;
+
+    //We are missing a 2 at the bottom right
+    //Can be reused to initialize several grid.
+    array<array<Region,3>,3> content= {
+        Region("295431876"), Region("743865192"), Region("861927543"),
+        Region("387612549"), Region("459387216"), Region("216495738"),
+        Region("763928154"), Region("534671938"), Region("18935467-")
+    };
+
+    Grid myGrid(content);
+    OnlyOneChoiceInRowVisitor visitor;
+    myGrid.accept(&visitor);
+    cout<<"Previously empty Cell is now: "<<myGrid.SE().getSE()->value<<" should be 2"<<endl;
+    errors += (myGrid.SE().getSE()->value!=2);
+
+    return errors;
+
 }
 
 int check_cells_methods() {

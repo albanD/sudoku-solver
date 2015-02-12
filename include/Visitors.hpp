@@ -9,7 +9,9 @@ public:
 };
 
 class OnlyOneChoiceInRowVisitor : public IVisitor{
+public:
         virtual bool Visit(Grid &ioGrid) const;
+        OnlyOneChoiceInRowVisitor();
 };
 
 #endif
