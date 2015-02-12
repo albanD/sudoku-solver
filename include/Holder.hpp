@@ -19,7 +19,7 @@ protected:
         Cell* third;
 };
 
-class RowHolder : protected TripleHolder{
+class RowHolder : public TripleHolder{
 public:
         RowHolder(Cell* g, Cell* c, Cell* d);
 
@@ -28,7 +28,7 @@ public:
         Cell* D();
 };
 
-class ColumnHolder : protected TripleHolder{
+class ColumnHolder : public TripleHolder{
 public:
         ColumnHolder(Cell* t, Cell* c, Cell* b);
 
@@ -54,14 +54,14 @@ public:
 
         RowHolder topRow();
         RowHolder middleRow();
-        RowHolder bottomRom();
+        RowHolder bottomRow();
         ColumnHolder leftColumn();
         ColumnHolder middleColumn();
         ColumnHolder rightColumn();
 
         const RowHolder topRow() const;
         const RowHolder middleRow() const;
-        const RowHolder bottomRom() const;
+        const RowHolder bottomRow() const;
         const ColumnHolder leftColumn() const;
         const ColumnHolder middleColumn() const;
         const ColumnHolder rightColumn() const;

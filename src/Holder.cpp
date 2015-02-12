@@ -60,14 +60,14 @@ Cell* RegionHolder::getSE() const {return SE;}
 
 RowHolder RegionHolder::topRow(){return RowHolder(getNO(),getN(),getNE());}
 RowHolder RegionHolder::middleRow(){return RowHolder(getO(),getC(),getE());}
-RowHolder RegionHolder::bottomRom(){return RowHolder(getSO(),getS(),getSE());}
+RowHolder RegionHolder::bottomRow(){return RowHolder(getSO(),getS(),getSE());}
 ColumnHolder RegionHolder::leftColumn(){return ColumnHolder(getNO(),getO(),getSO());}
 ColumnHolder RegionHolder::middleColumn(){return ColumnHolder(getN(),getC(),getS());}
 ColumnHolder RegionHolder::rightColumn(){return ColumnHolder(getNE(),getE(),getSE());}
 
 const RowHolder RegionHolder::topRow() const{return RowHolder(getNO(),getN(),getNE());}
 const RowHolder RegionHolder::middleRow() const{return RowHolder(getO(), getC(),getE());}
-const RowHolder RegionHolder::bottomRom() const{return RowHolder(getSO(),getS(),getSE());}
+const RowHolder RegionHolder::bottomRow() const{return RowHolder(getSO(),getS(),getSE());}
 const ColumnHolder RegionHolder::leftColumn() const{return ColumnHolder(getNO(), getO(),getSO());}
 const ColumnHolder RegionHolder::middleColumn() const{return ColumnHolder(getN(),getC(),getS());}
 const ColumnHolder RegionHolder::rightColumn() const{return ColumnHolder(getNE(),getE(),getSE());}
