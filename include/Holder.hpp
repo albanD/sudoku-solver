@@ -42,15 +42,29 @@ class RegionHolder{
 public:
         RegionHolder(Region region);
 
-        Cell* getNO();
-        Cell* getN();
-        Cell* getNE();
-        Cell* getO();
-        Cell* getC();
-        Cell* getE();
-        Cell* getSO();
-        Cell* getS();
-        Cell* getSE();
+        Cell* getNO() const;
+        Cell* getN() const;
+        Cell* getNE() const;
+        Cell* getO() const;
+        Cell* getC() const;
+        Cell* getE() const;
+        Cell* getSO() const;
+        Cell* getS() const;
+        Cell* getSE() const;
+
+        RowHolder topRow();
+        RowHolder middleRow();
+        RowHolder bottomRom();
+        ColumnHolder leftColumn();
+        ColumnHolder middleColumn();
+        ColumnHolder rightColumn();
+
+        const RowHolder topRow() const;
+        const RowHolder middleRow() const;
+        const RowHolder bottomRom() const;
+        const ColumnHolder leftColumn() const;
+        const ColumnHolder middleColumn() const;
+        const ColumnHolder rightColumn() const;
 
 private:
         Cell* NO;
