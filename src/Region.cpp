@@ -49,18 +49,3 @@ bool Region::isFull(){
 
         return not has_empty_cases;
 }
-
-Grid::Grid(array<array<Region,3>,3> regions) {
-        this->regions = regions;
-}
-
-bool Grid::isFull(){
-        for(array<array<Region,3>,3>::iterator liter=regions.begin(),lend=regions.end();liter!=lend;++liter){
-                for(array<Region,3>::iterator citer=liter->begin(),cend=liter->end(); citer!=cend; ++citer){
-                        if (not citer->isFull()){
-                                return false;
-                        }
-                }
-        }
-        return true;
-}

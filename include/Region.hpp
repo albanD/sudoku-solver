@@ -1,4 +1,5 @@
 #include "Cell.hpp"
+#include "Holder.hpp"
 #include <string>
 #include <array>
 
@@ -26,12 +27,5 @@ private:
 
 
 
-class Grid {
-public:
-        std::array<std::array<Region,3>,3> regions;
-
-        Grid(std::array<std::array<Region,3>,3> regions);
-        bool isFull();
-};
 
 #endif
