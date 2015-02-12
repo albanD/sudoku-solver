@@ -8,5 +8,8 @@ public:
         virtual bool Visit(Grid &ioGrid) const =0;
 };
 
+class OnlyOneChoiceInRowVisitor : public IVisitor{
+        virtual bool Visit(Grid &ioGrid) const;
+};
 
 #endif
