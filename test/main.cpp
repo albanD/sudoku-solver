@@ -4,21 +4,54 @@
 #include "Cell.hpp"
 #include "Region.hpp"
 #include "Holder.hpp"
+#include "LastCellFinder.hpp"
 
 using namespace std;
 
 int check_cells_methods();
 int check_region_methods();
+int check_last_cell_finder();
 
 int main() {
     int error_happened = 0;
 
+    cout<<endl<<"Starting to check Cell methods:"<<endl;
     error_happened += check_cells_methods();
+
+    cout<<endl<<"Starting to check Region methods:"<<endl;
     error_happened += check_region_methods();
+
+    cout<<endl<<"Starting to check LastCellFinder methods:"<<endl;
+    error_happened += check_last_cell_finder();
 
     return error_happened;
 }
 
+int check_last_cell_finder() {
+    int errors = 0;
+
+    Region myRegion_true = Region("12345678-");
+    Region myRegion_false = Region("1234567--");
+
+    RegionHolder true_holder = RegionHolder(myRegion_true);
+    RegionHolder false_holder = RegionHolder(myRegion_false);
+
+    LastCellFinder lf_true = LastCellFinder(true_holder.topRow(),
+                                            true_holder.middleRow(),
+                                            true_holder.bottomRow());
+
+    LastCellFinder lf_false = LastCellFinder(false_holder.topRow(),
+                                             false_holder.middleRow(),
+                                             false_holder.bottomRow());
+
+    bool true_res = lf_true.fill();
+    bool false_res = lf_false.fill();
+    cout<<"Filling out true_holder resulted in "<<true_res<<" should be 1"<<endl;
+    cout<<"Filling out false_holder resulted in "<<false_res<<" should be 0"<<endl;
+
+
+    return errors;
+}
 
 int check_cells_methods() {
     int errors = 0;
