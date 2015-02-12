@@ -30,17 +30,17 @@ int check_cells_methods() {
 
     // Check that an exception is raised in case of bad value
     bool exception_raised = false;
-	Cell myCell;
+    Cell myCell;
     try {
         myCell = Cell(12);
     } catch(invalid_argument const& e) {
         cout<<"Caught a cell exception as expected" <<endl;
         exception_raised = true;
     }
-	// Check that the equal sign raises the same exception
+    // Check that the equal sign raises the same exception
     try {
-		myCell = Cell(0);
-		myCell.value = 12;
+        myCell = Cell(0);
+        myCell.value = 12;
     } catch(invalid_argument const& e) {
         cout<<"Caught a cell exception as expected" <<endl;
         exception_raised = true;
@@ -109,7 +109,7 @@ int check_region_methods() {
     bool exception_raised = false;
     try {
         Region myRegion = Region("12345-------");
-		myRegion.isFull(); // Use the myRegion variable to prevent compilation warning
+        myRegion.isFull(); // Use the myRegion variable to prevent compilation warning
     } catch(invalid_argument const& e) {
         cout << "Caught a Region exception as expected" <<endl;
         exception_raised = true;
