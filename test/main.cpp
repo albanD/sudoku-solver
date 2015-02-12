@@ -69,6 +69,12 @@ int check_cells_methods() {
     cout << "Value of the first cell of the triplet is: "<<triplet.getFirst()->value<<" should be 8"<<endl;
     errors += (triplet.getFirst()->value!=8);
 
+
+    RowHolder row(&myCell1, &myCell2, &myCell3);
+    cout << "Value of the left cell of the row is: "<<row.G()->value<<" should be 8"<<endl;
+    errors += (row.G()->value!=8);
+
+
     return errors;
 
 }

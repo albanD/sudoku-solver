@@ -12,12 +12,19 @@ public:
         Cell* getSecond();
         Cell* getThird();
 
-
-private:
+protected:
         Cell* first;
         Cell* second;
         Cell* third;
 };
 
+class RowHolder : protected TripleHolder{
+public:
+        RowHolder(Cell* g, Cell* c, Cell* d);
+
+        Cell* G();
+        Cell* C();
+        Cell* D();
+};
 
 #endif
