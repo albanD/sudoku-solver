@@ -75,6 +75,12 @@ int check_cells_methods() {
     errors += (row.G()->value!=8);
 
 
+    ColumnHolder col(&myCell1, &myCell2, &myCell3);
+    cout << "Value of the top cell of the col is: "<<col.T()->value<<" should be 8"<<endl;
+    errors += (col.T()->value!=8);
+
+
+
     return errors;
 
 }

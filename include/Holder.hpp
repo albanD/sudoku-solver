@@ -27,4 +27,13 @@ public:
         Cell* D();
 };
 
+class ColumnHolder : protected TripleHolder{
+public:
+        ColumnHolder(Cell* t, Cell* c, Cell* b);
+
+        Cell* T();
+        Cell* C();
+        Cell* B();
+};
+
 #endif

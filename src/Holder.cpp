@@ -22,3 +22,14 @@ RowHolder::RowHolder(Cell* g, Cell* c, Cell* d){
 Cell* RowHolder::G(){return getFirst();}
 Cell* RowHolder::C(){return getSecond();}
 Cell* RowHolder::D(){return getThird();}
+
+
+ColumnHolder::ColumnHolder(Cell* t, Cell* c, Cell* b){
+        first = t;
+        second = c;
+        third = b;
+}
+
+Cell* ColumnHolder::T(){return getFirst();}
+Cell* ColumnHolder::C(){return getSecond();}
+Cell* ColumnHolder::B(){return getThird();}
