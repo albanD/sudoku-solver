@@ -169,3 +169,6 @@ bool OnlyOneChoiceInRegionVisitor::Visit(Grid &ioGrid) const{
 }
 
 OnlyOneChoiceInRegionVisitor::OnlyOneChoiceInRegionVisitor(){};
+
+
+OnlySquareVisitors::OnlySquareVisitors(){};

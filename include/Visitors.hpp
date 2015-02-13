@@ -26,5 +26,9 @@ public:
         OnlyOneChoiceInRegionVisitor();
 };
 
-
+class OnlySquareVisitor : public IVisitor{
+public:
+        virtual bool Visit(Grid &ioGrid) const;
+        OnlySquareVisitor();
+}
 #endif
