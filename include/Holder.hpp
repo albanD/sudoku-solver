@@ -3,6 +3,7 @@
 
 #include "Cell.hpp"
 #include "Region.hpp"
+#include "ValueEliminator.hpp"
 
 class TripleHolder{
 public:
@@ -12,6 +13,8 @@ public:
         Cell* getFirst();
         Cell* getSecond();
         Cell* getThird();
+
+        void flagValues(ValueEliminator ve) const;
 
 protected:
         Cell* first;
@@ -65,6 +68,8 @@ public:
         const ColumnHolder leftColumn() const;
         const ColumnHolder middleColumn() const;
         const ColumnHolder rightColumn() const;
+
+        void flagValues(ValueEliminator ve) const;
 
 private:
         Cell* NO;

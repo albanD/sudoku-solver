@@ -19,7 +19,7 @@ public:
 class NoAvailableValueException : public exception{
 public:
         NoAvailableValueException() throw(){ };
-        ~NoAvailableValueException() throw();
+        ~NoAvailableValueException() throw(){};
 
         virtual const char* what() const throw() {return "No Available value";};
 

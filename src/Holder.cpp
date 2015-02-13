@@ -14,6 +14,12 @@ Cell* TripleHolder::getFirst(){return first;}
 Cell* TripleHolder::getSecond(){return second;}
 Cell* TripleHolder::getThird(){return third;}
 
+void TripleHolder::flagValues(ValueEliminator ve) const{
+        ve.flag(*first);
+        ve.flag(*second);
+        ve.flag(*third);
+}
+
 RowHolder::RowHolder(Cell* g, Cell* c, Cell* d){
         first = g;
         second = c;
@@ -71,3 +77,16 @@ const RowHolder RegionHolder::bottomRow() const{return RowHolder(getSO(),getS(),
 const ColumnHolder RegionHolder::leftColumn() const{return ColumnHolder(getNO(), getO(),getSO());}
 const ColumnHolder RegionHolder::middleColumn() const{return ColumnHolder(getN(),getC(),getS());}
 const ColumnHolder RegionHolder::rightColumn() const{return ColumnHolder(getNE(),getE(),getSE());}
+
+
+void RegionHolder::flagValues(ValueEliminator ve) const{
+        ve.flag(*NO);
+        ve.flag(*N);
+        ve.flag(*NE);
+        ve.flag(*O);
+        ve.flag(*C);
+        ve.flag(*E);
+        ve.flag(*SO);
+        ve.flag(*S);
+        ve.flag(*SE);
+}
