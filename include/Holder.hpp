@@ -15,6 +15,7 @@ public:
         Cell* getThird();
 
         void flagValues(ValueEliminator ve) const;
+        bool isValuePresent(unsigned char iValue) const;
 
 protected:
         Cell* first;
@@ -70,7 +71,7 @@ public:
         const ColumnHolder rightColumn() const;
 
         void flagValues(ValueEliminator ve) const;
-
+        bool isValuePresent(unsigned char iValue) const;
 private:
         Cell* NO;
         Cell* N;

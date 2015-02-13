@@ -20,6 +20,14 @@ void TripleHolder::flagValues(ValueEliminator ve) const{
         ve.flag(*third);
 }
 
+bool TripleHolder::isValuePresent(unsigned char iValue) const{
+        bool isPresent = false;
+        isPresent |= (*first == iValue);
+        isPresent |= (*second == iValue);
+        isPresent |= (*third == iValue);
+        return isPresent;
+}
+
 RowHolder::RowHolder(Cell* g, Cell* c, Cell* d){
         first = g;
         second = c;
@@ -89,4 +97,18 @@ void RegionHolder::flagValues(ValueEliminator ve) const{
         ve.flag(*SO);
         ve.flag(*S);
         ve.flag(*SE);
+}
+
+bool RegionHolder::isValuePresent(unsigned char iValue) const{
+        bool isValuePresent = false;
+        isValuePresent|= (*NO == iValue);
+        isValuePresent|= (*N == iValue);
+        isValuePresent|= (*NE == iValue);
+        isValuePresent|= (*O == iValue);
+        isValuePresent|= (*C == iValue);
+        isValuePresent|= (*E == iValue);
+        isValuePresent|= (*SO == iValue);
+        isValuePresent|= (*S == iValue);
+        isValuePresent|= (*SE == iValue);
+
 }
