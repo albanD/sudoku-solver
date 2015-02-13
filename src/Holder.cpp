@@ -78,21 +78,31 @@ Cell* const RegionHolder::getCell(int const cell_index) const{
 }
 
 
-RowHolder RegionHolder::topRow(){return RowHolder(getNO(),getN(),getNE());}
-RowHolder RegionHolder::middleRow(){return RowHolder(getO(),getC(),getE());}
-RowHolder RegionHolder::bottomRow(){return RowHolder(getSO(),getS(),getSE());}
-ColumnHolder RegionHolder::leftColumn(){return ColumnHolder(getNO(),getO(),getSO());}
-ColumnHolder RegionHolder::middleColumn(){return ColumnHolder(getN(),getC(),getS());}
-ColumnHolder RegionHolder::rightColumn(){return ColumnHolder(getNE(),getE(),getSE());}
+RowHolder RegionHolder::topRow() const {return RowHolder(getNO(),getN(),getNE());}
+RowHolder RegionHolder::middleRow() const {return RowHolder(getO(),getC(),getE());}
+RowHolder RegionHolder::bottomRow() const {return RowHolder(getSO(),getS(),getSE());}
+RowHolder RegionHolder::getRow(int const cell_index) const{
+        if(cell_index<3){
+                return topRow();
+        } else if(cell_index<6){
+                return middleRow();
+        } else{
+                return bottomRow();
+        }
+}
 
-const RowHolder RegionHolder::topRow() const{return RowHolder(getNO(),getN(),getNE());}
-const RowHolder RegionHolder::middleRow() const{return RowHolder(getO(), getC(),getE());}
-const RowHolder RegionHolder::bottomRow() const{return RowHolder(getSO(),getS(),getSE());}
-const ColumnHolder RegionHolder::leftColumn() const{return ColumnHolder(getNO(), getO(),getSO());}
-const ColumnHolder RegionHolder::middleColumn() const{return ColumnHolder(getN(),getC(),getS());}
-const ColumnHolder RegionHolder::rightColumn() const{return ColumnHolder(getNE(),getE(),getSE());}
-
-
+ColumnHolder RegionHolder::leftColumn() const {return ColumnHolder(getNO(),getO(),getSO());}
+ColumnHolder RegionHolder::middleColumn() const {return ColumnHolder(getN(),getC(),getS());}
+ColumnHolder RegionHolder::rightColumn() const {return ColumnHolder(getNE(),getE(),getSE());}
+ColumnHolder RegionHolder::getColumn(int const cell_index) const{
+        if(cell_index<3){
+                return leftColumn();
+        } else if(cell_index<6){
+                return middleColumn();
+        } else{
+                return rightColumn();
+        }
+}
 void RegionHolder::flagValues(ValueEliminator ve) const{
         ve.flag(*NO);
         ve.flag(*N);

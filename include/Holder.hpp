@@ -57,19 +57,14 @@ public:
         Cell* const getSE() const;
         Cell* const getCell(int const cell_index) const;
 
-        RowHolder topRow();
-        RowHolder middleRow();
-        RowHolder bottomRow();
-        ColumnHolder leftColumn();
-        ColumnHolder middleColumn();
-        ColumnHolder rightColumn();
-
-        const RowHolder topRow() const;
-        const RowHolder middleRow() const;
-        const RowHolder bottomRow() const;
-        const ColumnHolder leftColumn() const;
-        const ColumnHolder middleColumn() const;
-        const ColumnHolder rightColumn() const;
+        RowHolder topRow() const;
+        RowHolder middleRow() const;
+        RowHolder bottomRow() const;
+        RowHolder getRow(int const row_idx) const;
+        ColumnHolder leftColumn() const;
+        ColumnHolder middleColumn() const;
+        ColumnHolder rightColumn() const;
+        ColumnHolder getColumn(int const col_idx) const;
 
         void flagValues(ValueEliminator ve) const;
         bool isValuePresent(unsigned char iValue) const;
