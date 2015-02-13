@@ -10,6 +10,14 @@ TripleHolder::TripleHolder(Cell* const cell1, Cell* const cell2,Cell* const cell
 Cell* const TripleHolder::getFirst(){return first;}
 Cell* const TripleHolder::getSecond(){return second;}
 Cell* const TripleHolder::getThird(){return third;}
+Cell* const TripleHolder::getCell(int const cell_index) const{
+        switch(cell_index){
+        case 0: return first;
+        case 1: return second;
+        case 2: return third;
+        }
+}
+
 
 void TripleHolder::flagValues(ValueEliminator ve) const{
         ve.flag(*first);
@@ -54,6 +62,20 @@ Cell* const RegionHolder::getE() const {return E;}
 Cell* const RegionHolder::getSO() const {return SO;}
 Cell* const RegionHolder::getS() const {return S;}
 Cell* const RegionHolder::getSE() const {return SE;}
+
+Cell* const RegionHolder::getCell(int const cell_index) const{
+        switch(cell_index){
+        case 0: return NO;
+        case 1: return N;
+        case 2: return NE;
+        case 3: return O;
+        case 4: return C;
+        case 5: return E;
+        case 6: return SO;
+        case 7: return S;
+        case 8: return SE;
+        }
+}
 
 
 RowHolder RegionHolder::topRow(){return RowHolder(getNO(),getN(),getNE());}

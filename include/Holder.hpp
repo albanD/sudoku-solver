@@ -12,6 +12,7 @@ public:
         Cell* const getFirst();
         Cell* const getSecond();
         Cell* const getThird();
+        Cell* const getCell(int const cell_index) const;
 
         void flagValues(ValueEliminator ve) const;
         bool isValuePresent(unsigned char iValue) const;
@@ -54,6 +55,7 @@ public:
         Cell* const getSO() const;
         Cell* const getS() const;
         Cell* const getSE() const;
+        Cell* const getCell(int const cell_index) const;
 
         RowHolder topRow();
         RowHolder middleRow();

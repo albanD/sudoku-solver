@@ -20,37 +20,19 @@ bool LastCellFinder::fill(){
         int empty_pos;
         int nb_empty = 0;
         for(int i=0;i<3;++i){
-                if (holders[i].getFirst()->isEmpty()){
-                        empty_holder = i;
-                        empty_pos = 1;
-                        nb_empty++;
-                } else{
-                        int pos =(int) *(holders[i].getFirst()) -1;
-                        index[pos] = true;
+                for(int j=0;j<3;++j){
+                        if (holders[i].getCell(j)->isEmpty()){
+                                empty_holder = i;
+                                empty_pos = j;
+                                nb_empty++;
+                        } else{
+                                int pos =(int) *(holders[i].getCell(j)) -1;
+                                index[pos] = true;
+                        }
+
                 }
-
-
-                if (holders[i].getSecond()->isEmpty()){
-                        empty_holder = i;
-                        empty_pos = 2;
-                        nb_empty++;
-                } else{
-                        int pos =(int) *(holders[i].getSecond()) -1;
-                        index[pos] = true;
-                }
-
-
-                if (holders[i].getThird()->isEmpty()){
-                        empty_holder = i;
-                        empty_pos = 3;
-                        nb_empty++;
-                } else{
-
-                        int pos = (int) *(holders[i].getThird()) -1;
-                        index[pos] = true;
-                }
-
         }
+
         int missing_value;
         if(nb_empty!=1){
                 //There is several empty cells, can't do anything
@@ -68,9 +50,7 @@ bool LastCellFinder::fill(){
                 missing_value++;
         }
 
-        if(empty_pos==1){*(holders[empty_holder].getFirst())=missing_value;}
-        if(empty_pos==2){*(holders[empty_holder].getSecond())=missing_value;}
-        if(empty_pos==3){*(holders[empty_holder].getThird())=missing_value;}
+        *(holders[empty_holder].getCell(empty_pos))=missing_value;
 
         return true;
 
