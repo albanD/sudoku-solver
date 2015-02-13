@@ -7,38 +7,37 @@
 
 class TripleHolder{
 public:
-        TripleHolder();
-        TripleHolder(Cell* cell1, Cell* cell2, Cell* cell3);
+        TripleHolder(Cell* const cell1, Cell* const cell2, Cell* const cell3);
 
-        Cell* getFirst();
-        Cell* getSecond();
-        Cell* getThird();
+        Cell* const getFirst();
+        Cell* const getSecond();
+        Cell* const getThird();
 
         void flagValues(ValueEliminator ve) const;
         bool isValuePresent(unsigned char iValue) const;
 
 protected:
-        Cell* first;
-        Cell* second;
-        Cell* third;
+        Cell* const first;
+        Cell* const second;
+        Cell* const third;
 };
 
 class RowHolder : public TripleHolder{
 public:
-        RowHolder(Cell* g, Cell* c, Cell* d);
+        RowHolder(Cell* const g, Cell* const c, Cell* const d): TripleHolder(g,c,d){};
 
-        Cell* G();
-        Cell* C();
-        Cell* D();
+        Cell* const G();
+        Cell* const C();
+        Cell* const D();
 };
 
 class ColumnHolder : public TripleHolder{
 public:
-        ColumnHolder(Cell* t, Cell* c, Cell* b);
+        ColumnHolder(Cell* t, Cell* c, Cell* b): TripleHolder(t,c,b){};
 
-        Cell* T();
-        Cell* C();
-        Cell* B();
+        Cell* const T();
+        Cell* const C();
+        Cell* const B();
 };
 
 
@@ -46,15 +45,15 @@ class RegionHolder{
 public:
         RegionHolder(Region &region);
 
-        Cell* getNO() const;
-        Cell* getN() const;
-        Cell* getNE() const;
-        Cell* getO() const;
-        Cell* getC() const;
-        Cell* getE() const;
-        Cell* getSO() const;
-        Cell* getS() const;
-        Cell* getSE() const;
+        Cell* const getNO() const;
+        Cell* const getN() const;
+        Cell* const getNE() const;
+        Cell* const getO() const;
+        Cell* const getC() const;
+        Cell* const getE() const;
+        Cell* const getSO() const;
+        Cell* const getS() const;
+        Cell* const getSE() const;
 
         RowHolder topRow();
         RowHolder middleRow();
@@ -73,15 +72,15 @@ public:
         void flagValues(ValueEliminator ve) const;
         bool isValuePresent(unsigned char iValue) const;
 private:
-        Cell* NO;
-        Cell* N;
-        Cell* NE;
-        Cell* O;
-        Cell* C;
-        Cell* E;
-        Cell* SO;
-        Cell* S;
-        Cell* SE;
+        Cell* const NO;
+        Cell* const N;
+        Cell* const NE;
+        Cell* const O;
+        Cell* const C;
+        Cell* const E;
+        Cell* const SO;
+        Cell* const S;
+        Cell* const SE;
 };
 
 #endif

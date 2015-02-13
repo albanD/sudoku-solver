@@ -6,7 +6,9 @@
 using namespace std;
 
 LastCellFinder::LastCellFinder(TripleHolder h1, TripleHolder h2, TripleHolder h3){
-        holders = {h1,h2,h3};
+        holders.push_back(h1);
+        holders.push_back(h2);
+        holders.push_back(h3);
 }
 
 bool LastCellFinder::fill(){

@@ -119,56 +119,23 @@ bool OnlyOneChoiceInRegionVisitor::Visit(Grid &ioGrid) const{
 
         bool changed = false;
 
-        LastCellFinder lf1(ioGrid.NO().leftColumn(),
-                           ioGrid.NO().middleColumn(),
-                           ioGrid.NO().rightColumn());
-        changed |= lf1.fill();
-
-        LastCellFinder lf2(ioGrid.N().leftColumn(),
-                           ioGrid.N().middleColumn(),
-                           ioGrid.N().rightColumn());
-        changed |= lf2.fill();
-
-        LastCellFinder lf3(ioGrid.NE().leftColumn(),
-                           ioGrid.NE().middleColumn(),
-                           ioGrid.NE().rightColumn());
-        changed |= lf3.fill();
-
-        LastCellFinder lf4(ioGrid.O().leftColumn(),
-                           ioGrid.O().middleColumn(),
-                           ioGrid.O().rightColumn());
-        changed |= lf4.fill();
-
-        LastCellFinder lf5(ioGrid.C().leftColumn(),
-                           ioGrid.C().middleColumn(),
-                           ioGrid.C().rightColumn());
-        changed |= lf5.fill();
-
-        LastCellFinder lf6(ioGrid.E().leftColumn(),
-                           ioGrid.E().middleColumn(),
-                           ioGrid.E().rightColumn());
-        changed |= lf6.fill();
-
-        LastCellFinder lf7(ioGrid.SO().leftColumn(),
-                           ioGrid.SO().middleColumn(),
-                           ioGrid.SO().rightColumn());
-        changed |= lf7.fill();
-
-        LastCellFinder lf8(ioGrid.S().leftColumn(),
-                           ioGrid.S().middleColumn(),
-                           ioGrid.S().rightColumn());
-        changed |= lf8.fill();
-
-        LastCellFinder lf9(ioGrid.SE().leftColumn(),
-                           ioGrid.SE().middleColumn(),
-                           ioGrid.SE().rightColumn());
-        changed |= lf9.fill();
+        for(int region_index=0;region_index<9; ++region_index){
+                RegionHolder rh = ioGrid.getRegion(region_index);
+                LastCellFinder lf(rh.leftColumn(),
+                                  rh.middleColumn(),
+                                  rh.rightColumn());
+                changed |= lf.fill();
+        }
 
         return changed;
-
 }
 
 OnlyOneChoiceInRegionVisitor::OnlyOneChoiceInRegionVisitor(){};
 
 
-OnlySquareVisitors::OnlySquareVisitors(){};
+bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
+
+}
+
+
+OnlySquareVisitor::OnlySquareVisitor(){};

@@ -24,6 +24,8 @@ public:
         RegionHolder S();
         RegionHolder SE();
 
+        RegionHolder getRegion(int reg_index);
+
         void accept(class IVisitor* v);
 
 };

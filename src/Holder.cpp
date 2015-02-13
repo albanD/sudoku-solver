@@ -2,17 +2,14 @@
 #include "Cell.hpp"
 #include "Region.hpp"
 
-TripleHolder::TripleHolder(){};
+TripleHolder::TripleHolder(Cell* const cell1, Cell* const cell2,Cell* const cell3):
+        first(cell1),
+        second(cell2),
+        third(cell3){}
 
-TripleHolder::TripleHolder(Cell* cell1, Cell* cell2, Cell* cell3){
-        first = cell1;
-        second = cell2;
-        third = cell3;
-}
-
-Cell* TripleHolder::getFirst(){return first;}
-Cell* TripleHolder::getSecond(){return second;}
-Cell* TripleHolder::getThird(){return third;}
+Cell* const TripleHolder::getFirst(){return first;}
+Cell* const TripleHolder::getSecond(){return second;}
+Cell* const TripleHolder::getThird(){return third;}
 
 void TripleHolder::flagValues(ValueEliminator ve) const{
         ve.flag(*first);
@@ -28,48 +25,35 @@ bool TripleHolder::isValuePresent(unsigned char iValue) const{
         return isPresent;
 }
 
-RowHolder::RowHolder(Cell* g, Cell* c, Cell* d){
-        first = g;
-        second = c;
-        third = d;
-}
 
-Cell* RowHolder::G(){return getFirst();}
-Cell* RowHolder::C(){return getSecond();}
-Cell* RowHolder::D(){return getThird();}
+Cell* const RowHolder::G(){return getFirst();}
+Cell* const RowHolder::C(){return getSecond();}
+Cell* const RowHolder::D(){return getThird();}
 
+Cell* const ColumnHolder::T(){return getFirst();}
+Cell* const ColumnHolder::C(){return getSecond();}
+Cell* const ColumnHolder::B(){return getThird();}
 
-ColumnHolder::ColumnHolder(Cell* t, Cell* c, Cell* b){
-        first = t;
-        second = c;
-        third = b;
-}
+RegionHolder::RegionHolder(Region &region):
+        NO(&(region.NO)),
+        N(&(region.N)),
+        NE(&(region.NE)),
+        O(&(region.O)),
+        C(&(region.C)),
+        E(&(region.E)),
+        SO(&(region.SO)),
+        S(&(region.S)),
+        SE(&(region.SE)){}
 
-Cell* ColumnHolder::T(){return getFirst();}
-Cell* ColumnHolder::C(){return getSecond();}
-Cell* ColumnHolder::B(){return getThird();}
-
-RegionHolder::RegionHolder(Region &region){
-        NO = &(region.NO);
-        N = &(region.N);
-        NE = &(region.NE);
-        O = &(region.O);
-        C = &(region.C);
-        E = &(region.E);
-        SO = &(region.SO);
-        S = &(region.S);
-        SE = &(region.SE);
-}
-
-Cell* RegionHolder::getNO() const {return NO;}
-Cell* RegionHolder::getN() const {return N;}
-Cell* RegionHolder::getNE() const {return NE;}
-Cell* RegionHolder::getO() const {return O;}
-Cell* RegionHolder::getC() const {return C;}
-Cell* RegionHolder::getE() const {return E;}
-Cell* RegionHolder::getSO() const {return SO;}
-Cell* RegionHolder::getS() const {return S;}
-Cell* RegionHolder::getSE() const {return SE;}
+Cell* const RegionHolder::getNO() const {return NO;}
+Cell* const RegionHolder::getN() const {return N;}
+Cell* const RegionHolder::getNE() const {return NE;}
+Cell* const RegionHolder::getO() const {return O;}
+Cell* const RegionHolder::getC() const {return C;}
+Cell* const RegionHolder::getE() const {return E;}
+Cell* const RegionHolder::getSO() const {return SO;}
+Cell* const RegionHolder::getS() const {return S;}
+Cell* const RegionHolder::getSE() const {return SE;}
 
 
 RowHolder RegionHolder::topRow(){return RowHolder(getNO(),getN(),getNE());}

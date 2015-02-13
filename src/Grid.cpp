@@ -30,6 +30,12 @@ RegionHolder Grid::SO(){return RegionHolder(regions[2][0]);}
 RegionHolder Grid::S(){return RegionHolder(regions[2][1]);}
 RegionHolder Grid::SE(){return RegionHolder(regions[2][2]);}
 
+RegionHolder Grid::getRegion(int reg_index) {
+        int main_row = reg_index / 3;
+        int main_col = reg_index - (3*main_row);
+        return RegionHolder(regions[main_row][main_col]);
+}
+
 
 void Grid::accept(IVisitor* v){
         v->Visit(*this);
