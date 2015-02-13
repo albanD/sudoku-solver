@@ -14,7 +14,7 @@ public:
         Cell* const getThird();
         Cell* const getCell(int const cell_index) const;
 
-        void flagValues(ValueEliminator ve) const;
+        void flagValues(ValueEliminator &ve) const;
         bool isValuePresent(unsigned char iValue) const;
 
 protected:
@@ -61,12 +61,13 @@ public:
         RowHolder middleRow() const;
         RowHolder bottomRow() const;
         RowHolder getRow(int const row_idx) const;
+
         ColumnHolder leftColumn() const;
         ColumnHolder middleColumn() const;
         ColumnHolder rightColumn() const;
         ColumnHolder getColumn(int const col_idx) const;
 
-        void flagValues(ValueEliminator ve) const;
+        void flagValues(ValueEliminator &ve) const;
         bool isValuePresent(unsigned char iValue) const;
 private:
         Cell* const NO;

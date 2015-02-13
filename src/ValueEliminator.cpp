@@ -1,4 +1,7 @@
 #include "ValueEliminator.hpp"
+#include <iostream>
+
+using namespace std;
 
 ValueEliminator::ValueEliminator(){
         seen = {false, false, false,
@@ -7,16 +10,19 @@ ValueEliminator::ValueEliminator(){
 }
 
 void ValueEliminator::flag(unsigned char iValue){
-        seen[iValue] = true;
+        if((int) iValue!=0){// Handle the 0 case, in case the cell was empty
+                seen[(int)iValue -1] = true;
+        }
 }
 
 int ValueEliminator::availableValues() const{
         int count = 0;
-        for(array<bool,0>::const_iterator it= seen.begin(), end=seen.end();it!=end;++it){
+        for(array<bool,9>::const_iterator it= seen.begin(), end=seen.end();it!=end;++it){
                 if(not *it){
                         count++;
                 }
         }
+
         return count;
 }
 

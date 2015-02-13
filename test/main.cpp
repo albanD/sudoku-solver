@@ -14,6 +14,7 @@ int check_cells_methods();
 int check_region_methods();
 int check_last_cell_finder();
 int check_full_sudoku();
+int check_intermediary();
 
 int main() {
     int error_happened = 0;
@@ -29,6 +30,9 @@ int main() {
 
     cout<<endl<<"Starting to check Full Sudokus methods:"<<endl;
     error_happened += check_full_sudoku();
+
+    cout<<endl<<"Starting to check Intermediary resolution methods"<<endl;
+    error_happened += check_intermediary();
 
     return error_happened;
 }
@@ -96,6 +100,29 @@ int check_full_sudoku(){
 
 
     return errors;
+
+}
+
+int check_intermediary(){
+    int errors = 0;
+
+    //We are missing a 2 at the bottom right and a 1 at the bottom left
+    array<array<Region,3>,3> content= {
+        Region("295431876"), Region("743865192"), Region("861927543"),
+        Region("387612549"), Region("459387216"), Region("216495738"),
+        Region("763928-54"), Region("534671938"), Region("18935467-")
+    };
+
+    Grid myGrid_square(content);
+    OnlySquareVisitor square_visitor;
+    myGrid_square.accept(&square_visitor);
+    cout<<"OneSquare - Previously empty bottom right Cell is now: "<<myGrid_square.SE().getSE()->value<<" should be 2"<<endl;
+    cout<<"OneSquare - Previously empty bottom left Cell is now: "<<myGrid_square.SO().getSO()->value<<" should be 1"<<endl;
+    errors += (myGrid_square.SE().getSE()->value!=2);
+    errors += (myGrid_square.SO().getSO()->value!=1);
+
+    return errors;
+
 
 }
 

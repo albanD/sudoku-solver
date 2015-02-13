@@ -19,7 +19,7 @@ Cell* const TripleHolder::getCell(int const cell_index) const{
 }
 
 
-void TripleHolder::flagValues(ValueEliminator ve) const{
+void TripleHolder::flagValues(ValueEliminator &ve) const{
         ve.flag(*first);
         ve.flag(*second);
         ve.flag(*third);
@@ -81,29 +81,25 @@ Cell* const RegionHolder::getCell(int const cell_index) const{
 RowHolder RegionHolder::topRow() const {return RowHolder(getNO(),getN(),getNE());}
 RowHolder RegionHolder::middleRow() const {return RowHolder(getO(),getC(),getE());}
 RowHolder RegionHolder::bottomRow() const {return RowHolder(getSO(),getS(),getSE());}
-RowHolder RegionHolder::getRow(int const cell_index) const{
-        if(cell_index<3){
-                return topRow();
-        } else if(cell_index<6){
-                return middleRow();
-        } else{
-                return bottomRow();
+RowHolder RegionHolder::getRow(int const row_index) const{
+        switch(row_index){
+        case 0: return topRow();
+        case 1: return middleRow();
+        case 2: return bottomRow();
         }
 }
 
 ColumnHolder RegionHolder::leftColumn() const {return ColumnHolder(getNO(),getO(),getSO());}
 ColumnHolder RegionHolder::middleColumn() const {return ColumnHolder(getN(),getC(),getS());}
 ColumnHolder RegionHolder::rightColumn() const {return ColumnHolder(getNE(),getE(),getSE());}
-ColumnHolder RegionHolder::getColumn(int const cell_index) const{
-        if(cell_index<3){
-                return leftColumn();
-        } else if(cell_index<6){
-                return middleColumn();
-        } else{
-                return rightColumn();
+ColumnHolder RegionHolder::getColumn(int const col_index) const{
+        switch(col_index){
+        case 0: return leftColumn();
+        case 1: return middleColumn();
+        case 2: return rightColumn();
         }
 }
-void RegionHolder::flagValues(ValueEliminator ve) const{
+void RegionHolder::flagValues(ValueEliminator &ve) const{
         ve.flag(*NO);
         ve.flag(*N);
         ve.flag(*NE);
