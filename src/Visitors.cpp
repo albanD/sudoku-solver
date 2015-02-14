@@ -85,7 +85,7 @@ OnlyOneChoiceInRegionVisitor::OnlyOneChoiceInRegionVisitor(){}
 
 
 bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
-
+        bool changed_something = false;
 
         // Only Square on each row
         for(int row=0; row<9; ++row){
@@ -141,6 +141,7 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                                 *(ioGrid.getCell(row,sc))=last_missing_value;
                         }
                 }
+                changed_something|= changed_one;
         }
 
         // Only Square on each Column
@@ -197,8 +198,10 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                                 *(ioGrid.getCell(sr,col))=last_missing_value;
                         }
                 }
+                changed_something|= changed_one;
         }
 
+        return changed_something;
 }
 
 unordered_set<int> OnlySquareVisitor::intersection(unordered_set<int> a, unordered_set<int> b){
