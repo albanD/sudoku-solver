@@ -106,20 +106,34 @@ int check_full_sudoku(){
 int check_intermediary(){
     int errors = 0;
 
+    OnlySquareVisitor square_visitor;
+
     //We are missing a 2 at the bottom right and a 1 at the bottom left
-    array<array<Region,3>,3> content= {
+    array<array<Region,3>,3> content_row= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("216495738"),
         Region("763928-54"), Region("534671938"), Region("18935467-")
     };
+    Grid myGrid_square_row(content_row);
+    myGrid_square_row.accept(&square_visitor);
+    cout<<"OneSquareRow - Previously empty bottom right Cell is now: "<<myGrid_square_row.SE().getSE()->value<<" should be 2"<<endl;
+    cout<<"OneSquareRow - Previously empty bottom left Cell is now: "<<myGrid_square_row.SO().getSO()->value<<" should be 1"<<endl;
+    errors += (myGrid_square_row.SE().getSE()->value!=2);
+    errors += (myGrid_square_row.SO().getSO()->value!=1);
 
-    Grid myGrid_square(content);
-    OnlySquareVisitor square_visitor;
-    myGrid_square.accept(&square_visitor);
-    cout<<"OneSquare - Previously empty bottom right Cell is now: "<<myGrid_square.SE().getSE()->value<<" should be 2"<<endl;
-    cout<<"OneSquare - Previously empty bottom left Cell is now: "<<myGrid_square.SO().getSO()->value<<" should be 1"<<endl;
-    errors += (myGrid_square.SE().getSE()->value!=2);
-    errors += (myGrid_square.SO().getSO()->value!=1);
+    //We are missing a 2 at the bottom right and a 8 at the bottom right of E
+    array<array<Region,3>,3> content_col= {
+        Region("295431876"), Region("743865192"), Region("861927543"),
+        Region("387612549"), Region("459387216"), Region("21649573-"),
+        Region("763928154"), Region("534671938"), Region("18935467-")
+    };
+    Grid myGrid_square_col(content_col);
+    myGrid_square_col.accept(&square_visitor);
+    cout<<"OneSquareCol - Previously empty bottom right Cell is now: "<<myGrid_square_col.SE().getSE()->value<<" should be 2"<<endl;
+    cout<<"OneSquareCol - Previously empty mid-bottom right Cell is now: "<<myGrid_square_col.E().getSE()->value<<" should be 8"<<endl;
+    errors += (myGrid_square_col.SE().getSE()->value!=2);
+    errors += (myGrid_square_col.E().getSE()->value!=8);
+
 
     return errors;
 
