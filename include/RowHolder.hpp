@@ -6,6 +6,7 @@
 
 class RowHolder : public TripleHolder{
 public:
+        RowHolder(): TripleHolder(){};
         RowHolder(Cell* const g, Cell* const c, Cell* const d): TripleHolder(g,c,d){};
 
         Cell* const G();

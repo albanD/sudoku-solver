@@ -6,6 +6,7 @@
 
 class TripleHolder{
 public:
+        TripleHolder(): first(NULL), second(NULL), third(NULL) {};
         TripleHolder(Cell* const cell1, Cell* const cell2, Cell* const cell3);
 
         Cell* const getFirst();
@@ -15,11 +16,13 @@ public:
 
         void flagValues(ValueEliminator &ve) const;
         bool isValuePresent(unsigned char iValue) const;
+        bool isFull() const;
+        TripleHolder & operator=(TripleHolder rh);
 
 protected:
-        Cell* const first;
-        Cell* const second;
-        Cell* const third;
+        Cell* first;
+        Cell* second;
+        Cell* third;
 };
 
 

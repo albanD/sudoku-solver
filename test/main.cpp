@@ -203,6 +203,7 @@ int check_cells_methods() {
     cout << "Value of the first cell of the triplet is: "<<triplet.getFirst()->value<<" should be 8"<<endl;
     errors += (triplet.getFirst()->value!=8);
 
+    cout << "My triplet is full: "<<triplet.isFull()<<", should be 1"<<endl;
 
     RowHolder row(&myCell1, &myCell2, &myCell3);
     cout << "Value of the left cell of the row is: "<<row.G()->value<<" should be 8"<<endl;
@@ -212,7 +213,6 @@ int check_cells_methods() {
     ColumnHolder col(&myCell1, &myCell2, &myCell3);
     cout << "Value of the top cell of the col is: "<<col.T()->value<<" should be 8"<<endl;
     errors += (col.T()->value!=8);
-
 
 
     return errors;
