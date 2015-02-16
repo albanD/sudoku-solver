@@ -12,6 +12,7 @@
 #include "OnlyOneChoiceInRegionVisitor.hpp"
 #include "OnlyOneChoiceInRowVisitor.hpp"
 #include "OnlySquareVisitor.hpp"
+#include "TwoOutOfThreeRowVisitor.hpp"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ int check_region_methods();
 int check_last_cell_finder();
 int check_full_sudoku();
 int check_intermediary();
+int check_two_out_of_three();
 
 int main() {
     int error_happened = 0;
@@ -38,6 +40,9 @@ int main() {
 
     cout<<endl<<"Starting to check Intermediary resolution methods"<<endl;
     error_happened += check_intermediary();
+
+    cout<<endl<<"Starting to check two out of three resolution methods"<<endl;
+    error_happened += check_two_out_of_three();
 
     return error_happened;
 }
@@ -259,4 +264,27 @@ int check_region_methods() {
     return errors;
 
 
+}
+
+int check_two_out_of_three() {
+    int errors = 0;
+
+    TwoOutOfThreeRowVisitor twoOutOfThreeRowVisitor;
+
+    //The array given in the subject to test the row
+    array<array<Region,3>,3> content_row= {
+        Region("--9634125"), Region("51----639"), Region("-6259-7-4"),
+        Region("---------"), Region("--7---32-"), Region("---------"),
+        Region("---------"), Region("173------"), Region("---------")
+    };
+    Grid myGrid(content_row);
+
+    bool res = myGrid.accept(&twoOutOfThreeRowVisitor);
+    
+    cout<<"Two out of three row visitor shoud have filled something (return 1), it returned: "<<res<<endl;
+    errors += (res!=1);
+    cout<<"Top-left of the top-right region should be filled with 3, it is: "<<myGrid.NE().getNO()->value<<endl;
+    errors += (myGrid.NE().getNO()->value!=3);
+
+    return errors;
 }
