@@ -3,10 +3,15 @@
 
 #include "Cell.hpp"
 #include "Region.hpp"
-#include "Holder.hpp"
+#include "ColumnHolder.hpp"
+#include "RowHolder.hpp"
+#include "RegionHolder.hpp"
 #include "LastCellFinder.hpp"
 #include "Grid.hpp"
-#include "Visitors.hpp"
+#include "OnlyOneChoiceInColumnVisitor.hpp"
+#include "OnlyOneChoiceInRegionVisitor.hpp"
+#include "OnlyOneChoiceInRowVisitor.hpp"
+#include "OnlySquareVisitor.hpp"
 
 using namespace std;
 

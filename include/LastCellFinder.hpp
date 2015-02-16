@@ -1,7 +1,7 @@
 #ifndef LAST_CELL_FINDER
 #define LAST_CELL_FINDER
 
-#include "Holder.hpp"
+#include "TripleHolder.hpp"
 #include <vector>
 
 using namespace std;
