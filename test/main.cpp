@@ -12,6 +12,7 @@
 #include "OnlyOneChoiceInRegionVisitor.hpp"
 #include "OnlyOneChoiceInRowVisitor.hpp"
 #include "OnlySquareVisitor.hpp"
+#include "TwoOutOfThreeColumnVisitor.hpp"
 #include "TwoOutOfThreeRowVisitor.hpp"
 
 using namespace std;
@@ -22,6 +23,7 @@ int check_last_cell_finder();
 int check_full_sudoku();
 int check_intermediary();
 int check_two_out_of_three();
+int check_end_part_3();
 
 int main() {
     int error_happened = 0;
@@ -270,6 +272,7 @@ int check_two_out_of_three() {
     int errors = 0;
 
     TwoOutOfThreeRowVisitor twoOutOfThreeRowVisitor;
+    TwoOutOfThreeColumnVisitor twoOutOfThreeColumnVisitor;
 
     //The array given in the subject to test the row
     array<array<Region,3>,3> content_row= {
@@ -286,5 +289,12 @@ int check_two_out_of_three() {
     cout<<"Top-left of the top-right region should be filled with 3, it is: "<<myGrid.NE().getNO()->value<<endl;
     errors += (myGrid.NE().getNO()->value!=3);
 
+    myGrid = Grid(content_row);
+    res = myGrid.accept(&twoOutOfThreeColumnVisitor);
+    
+    cout<<"Two out of three column visitor shoud have filled something (return 1), it returned: "<<res<<endl;
+    errors += (res!=1);
+    cout<<"Middle-left of the middle-top region should be filled with 7, it is: "<<myGrid.N().getO()->value<<endl;
+    errors += (myGrid.N().getO()->value!=7);
     return errors;
 }
