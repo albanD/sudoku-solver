@@ -1,6 +1,6 @@
 #include "LastCellFinder.hpp"
 
-#include "Holder.hpp"
+#include "TripleHolder.hpp"
 #include <array>
 
 using namespace std;

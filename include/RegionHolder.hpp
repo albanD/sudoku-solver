@@ -1,46 +1,11 @@
-#ifndef HOLDER_HPP
-#define HOLDER_HPP
+#ifndef REGIONHOLDER_HPP
+#define REGIONHOLDER_HPP
 
 #include "Cell.hpp"
+#include "RowHolder.hpp"
+#include "ColumnHolder.hpp"
 #include "Region.hpp"
 #include "ValueEliminator.hpp"
-
-class TripleHolder{
-public:
-        TripleHolder(Cell* const cell1, Cell* const cell2, Cell* const cell3);
-
-        Cell* const getFirst();
-        Cell* const getSecond();
-        Cell* const getThird();
-        Cell* const getCell(int const cell_index) const;
-
-        void flagValues(ValueEliminator &ve) const;
-        bool isValuePresent(unsigned char iValue) const;
-
-protected:
-        Cell* const first;
-        Cell* const second;
-        Cell* const third;
-};
-
-class RowHolder : public TripleHolder{
-public:
-        RowHolder(Cell* const g, Cell* const c, Cell* const d): TripleHolder(g,c,d){};
-
-        Cell* const G();
-        Cell* const C();
-        Cell* const D();
-};
-
-class ColumnHolder : public TripleHolder{
-public:
-        ColumnHolder(Cell* t, Cell* c, Cell* b): TripleHolder(t,c,b){};
-
-        Cell* const T();
-        Cell* const C();
-        Cell* const B();
-};
-
 
 class RegionHolder{
 public:
@@ -80,5 +45,7 @@ private:
         Cell* const S;
         Cell* const SE;
 };
+
+
 
 #endif

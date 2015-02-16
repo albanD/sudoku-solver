@@ -1,5 +1,6 @@
 #include "Region.hpp"
-#include "Holder.hpp"
+#include "ColumnHolder.hpp"
+#include "RegionHolder.hpp"
 #include "Grid.hpp"
 #include "IVisitor.hpp"
 #include <array>
