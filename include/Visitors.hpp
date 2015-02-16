@@ -1,6 +1,7 @@
-#include "Grid.hpp"
 #ifndef VISITORS
 #define VISITORS
+
+#include "Grid.hpp"
 
 class IVisitor{
 public:
