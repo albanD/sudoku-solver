@@ -2,6 +2,7 @@
 #define GRID
 #include "Region.hpp"
 #include "Holder.hpp"
+#include "Cell.hpp"
 #include <array>
 
 using namespace std;
@@ -24,7 +25,11 @@ public:
         RegionHolder S();
         RegionHolder SE();
 
+        RegionHolder getRegion(int reg_index);
 
+        void accept(class IVisitor* v);
+        void show();
+        Cell* getCell(int row, int col);
 };
 
 #endif

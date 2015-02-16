@@ -28,6 +28,11 @@ Cell::operator unsigned char() const{
     return  (unsigned char) value;
 }
 
+Cell::operator long unsigned int () const{
+    return  (long unsigned int) value;
+}
+
+
 bool Cell::operator ==(unsigned char iValue){
     return (unsigned char) value == iValue;
 }
