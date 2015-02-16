@@ -40,11 +40,14 @@ int main() {
     cout<<endl<<"Starting to check Full Sudokus methods:"<<endl;
     error_happened += check_full_sudoku();
 
-    cout<<endl<<"Starting to check Intermediary resolution methods"<<endl;
+    cout<<endl<<"Starting to check Intermediary resolution methods:"<<endl;
     error_happened += check_intermediary();
 
-    cout<<endl<<"Starting to check two out of three resolution methods"<<endl;
+    cout<<endl<<"Starting to check two out of three resolution methods:"<<endl;
     error_happened += check_two_out_of_three();
+
+    cout<<endl<<"Starting to check all the simple methods on the given test grid:"<<endl;
+    error_happened += check_end_part_3();
 
     return error_happened;
 }
@@ -296,5 +299,41 @@ int check_two_out_of_three() {
     errors += (res!=1);
     cout<<"Middle-left of the middle-top region should be filled with 7, it is: "<<myGrid.N().getO()->value<<endl;
     errors += (myGrid.N().getO()->value!=7);
+
+    return errors;
+}
+
+int check_end_part_3() {
+    int errors = 0;
+
+    OnlyOneChoiceInRowVisitor onlyOneChoiceInRowVisitor;
+    OnlyOneChoiceInColumnVisitor onlyOneChoiceInColumnVisitor;
+    OnlyOneChoiceInRegionVisitor onlyOneChoiceInRegionVisitor;
+    OnlySquareVisitor onlySquareVisitor;
+    TwoOutOfThreeRowVisitor twoOutOfThreeRowVisitor;
+    TwoOutOfThreeColumnVisitor twoOutOfThreeColumnVisitor;
+
+    //The array given in the subject to test the simple visitors
+    array<array<Region,3>,3> content_row= {
+        Region("-----6--9"), Region("--23----1"), Region("6-3--1-52"),
+        Region("782----5-"), Region("---------"), Region("-9----726"),
+        Region("24-8--6-5"), Region("1----48--"), Region("8--5-----")
+    };
+    Grid myGrid(content_row);
+
+    bool somethingDone = true;
+    while (somethingDone) {
+        somethingDone = false;
+        somethingDone |= myGrid.accept(&onlyOneChoiceInRowVisitor);
+        somethingDone |= myGrid.accept(&onlyOneChoiceInColumnVisitor);
+        somethingDone |= myGrid.accept(&onlyOneChoiceInRegionVisitor);
+        somethingDone |= myGrid.accept(&onlySquareVisitor);
+        somethingDone |= myGrid.accept(&twoOutOfThreeRowVisitor);
+        somethingDone |= myGrid.accept(&twoOutOfThreeColumnVisitor);
+    }
+
+    cout<<"Simple method should have filled the grid. Grid.isFull="<<myGrid.isFull()<<" (1 expected)"<<endl;
+    errors+=(myGrid.isFull()!=true);
+
     return errors;
 }
