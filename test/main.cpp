@@ -6,7 +6,10 @@
 #include "Holder.hpp"
 #include "LastCellFinder.hpp"
 #include "Grid.hpp"
-#include "Visitors.hpp"
+#include "OnlyOneChoiceInColumnVisitor.hpp"
+#include "OnlyOneChoiceInRegionVisitor.hpp"
+#include "OnlyOneChoiceInRowVisitor.hpp"
+#include "OnlySquareVisitor.hpp"
 
 using namespace std;
 

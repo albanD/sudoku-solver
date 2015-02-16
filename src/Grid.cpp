@@ -1,7 +1,7 @@
 #include "Region.hpp"
 #include "Holder.hpp"
 #include "Grid.hpp"
-#include "Visitors.hpp"
+#include "IVisitor.hpp"
 #include <array>
 #include <iostream>
 
