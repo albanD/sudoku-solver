@@ -3,6 +3,7 @@ LD = $(GCC)
 
 TARGET = build/TestSudoku
 LIBRARY = build/libSudokuSolver.so
+DEBUGEXE = build/debug
 
 SOURCES_LIB = $(wildcard src/*.cpp)
 INCLUDE_LIB = include
@@ -18,8 +19,10 @@ OBJECTS_TEST = $(SOURCES_TEST:.cpp=.o)
 CFLAGS = -std=c++11 -c -Wall -g -O $(INCLUDE_TEST_ARG)
 LDFLAGS = -Lbuild -lSudokuSolver -lstdc++
 
+LDDEBUGFLAGS = -lstdc++ -g -gdwarf-3
 
 all: $(LIBRARY) $(TARGET)
+debug: $(DEBUGEXE)
 
 src/%.o: src/%.cpp
 	$(GCC)  $(CSHAREDFLAGS) $< -o $@
@@ -35,10 +38,12 @@ $(LIBRARY): $(OBJECTS_LIB)
 $(TARGET): $(OBJECTS_TEST)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
+$(DEBUGEXE): $(OBJECTS_LIB) $(OBJECTS_TEST)
+	$(LD) -o $@ $^ $(LDDEBUGFLAGS)
 
 
 cl:
 	rm $(OBJECTS)
 
 clean:
-	rm $(TARGET) $(OBJECTS_LIB) $(OBJECTS_TEST)
+	rm $(TARGET) $(LIBRARY) $(DEBUGEXE) $(OBJECTS_LIB) $(OBJECTS_TEST)
