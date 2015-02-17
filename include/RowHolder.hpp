@@ -6,12 +6,11 @@
 
 class RowHolder : public TripleHolder{
 public:
-        RowHolder(): TripleHolder(){};
-        RowHolder(Cell* const g, Cell* const c, Cell* const d): TripleHolder(g,c,d){};
+        RowHolder(Cell &g, Cell &c, Cell &d): TripleHolder(g,c,d){};
 
-        Cell* const G();
-        Cell* const C();
-        Cell* const D();
+        Cell &G();
+        Cell &C();
+        Cell &D();
 };
 
 

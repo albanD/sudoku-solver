@@ -14,7 +14,6 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
         pair<int,int> position;
         int line;
         std::vector<bool>::iterator it;
-        TripleHolder fillableTriplet;
 
         for(int main_row=0; main_row<3;++main_row) {
                 // main_row is the row we are working with
@@ -65,36 +64,30 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                                         
                                         
                                         // get the possible column in the working region                                        
-                                        if(line == 0) {
-                                                fillableTriplet = regions[0].topRow();
-                                        } else if (line == 1) {
-                                                fillableTriplet = regions[0].middleRow();
-                                        } else if (line == 2) {
-                                                fillableTriplet = regions[0].bottomRow();
-                                        }
+                                        TripleHolder fillableTriplet = regions[0].getRow(line);
 
                                         // is there a value in this possible cell?
-                                        if(!fillableTriplet.getFirst()->isEmpty()) {
+                                        if(!fillableTriplet.getFirst().isEmpty()) {
                                                 presentInTriplet[0] = true;
                                         }
-                                        if(!fillableTriplet.getSecond()->isEmpty()) {
+                                        if(!fillableTriplet.getSecond().isEmpty()) {
                                                 presentInTriplet[1] = true;
                                         }
-                                        if(!fillableTriplet.getThird()->isEmpty()) {
+                                        if(!fillableTriplet.getThird().isEmpty()) {
                                                 presentInTriplet[2] = true;
                                         }
 
                                         // if there is only one possile place, fill it
                                         if(!presentInTriplet[0] && presentInTriplet[1] && presentInTriplet[2]) {
-                                                *(fillableTriplet.getFirst()) = value;
+                                                fillableTriplet.getFirst() = value;
                                                 changed = true;
                                         }
                                         if(presentInTriplet[0] && !presentInTriplet[1] && presentInTriplet[2]) {
-                                                *(fillableTriplet.getSecond()) = value;
+                                                fillableTriplet.getSecond() = value;
                                                 changed = true;
                                         }
                                         if(presentInTriplet[0] && presentInTriplet[1] && !presentInTriplet[2]) {
-                                                *(fillableTriplet.getThird()) = value;
+                                                fillableTriplet.getThird() = value;
                                                 changed = true;
                                         }
 

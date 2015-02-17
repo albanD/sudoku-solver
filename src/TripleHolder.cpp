@@ -1,15 +1,15 @@
 #include "TripleHolder.hpp"
 #include <iostream>
 
-TripleHolder::TripleHolder(Cell* const cell1, Cell* const cell2,Cell* const cell3):
+TripleHolder::TripleHolder(Cell &cell1, Cell &cell2,Cell &cell3):
         first(cell1),
         second(cell2),
         third(cell3){}
 
-Cell* const TripleHolder::getFirst(){return first;}
-Cell* const TripleHolder::getSecond(){return second;}
-Cell* const TripleHolder::getThird(){return third;}
-Cell* const TripleHolder::getCell(int const cell_index) const{
+Cell &TripleHolder::getFirst(){return first;}
+Cell &TripleHolder::getSecond(){return second;}
+Cell &TripleHolder::getThird(){return third;}
+Cell &TripleHolder::getCell(int const cell_index) const{
         switch(cell_index){
         case 0: return first;
         case 1: return second;
@@ -19,22 +19,22 @@ Cell* const TripleHolder::getCell(int const cell_index) const{
 
 
 void TripleHolder::flagValues(ValueEliminator &ve) const{
-        ve.flag(*first);
-        ve.flag(*second);
-        ve.flag(*third);
+        ve.flag(first);
+        ve.flag(second);
+        ve.flag(third);
 }
 
 bool TripleHolder::isValuePresent(unsigned char iValue) const{
         bool isPresent = false;
-        isPresent |= (*first == iValue);
-        isPresent |= (*second == iValue);
-        isPresent |= (*third == iValue);
+        isPresent |= (first == iValue);
+        isPresent |= (second == iValue);
+        isPresent |= (third == iValue);
         return isPresent;
 }
 
 bool TripleHolder::isFull() const {
         unsigned char noElement = '0';
-        return !(*first == noElement) || !(*second == noElement) || !(*third == noElement);
+        return !(first == noElement) || !(second == noElement) || !(third == noElement);
 }
 
 TripleHolder & TripleHolder::operator=(TripleHolder rh) {

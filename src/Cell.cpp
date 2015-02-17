@@ -13,7 +13,7 @@ Cell::Cell(int x){
     value = x;
 }
 
-bool Cell::isEmpty(){
+bool Cell::isEmpty() const{
     return value==0;
 }
 

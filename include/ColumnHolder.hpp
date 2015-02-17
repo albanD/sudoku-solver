@@ -7,12 +7,11 @@
 
 class ColumnHolder : public TripleHolder{
 public:
-        ColumnHolder(): TripleHolder(){};
-        ColumnHolder(Cell* t, Cell* c, Cell* b): TripleHolder(t,c,b){};
+        ColumnHolder(Cell& t, Cell& c, Cell& b): TripleHolder(t,c,b){};
 
-        Cell* const T();
-        Cell* const C();
-        Cell* const B();
+        Cell &T();
+        Cell &C();
+        Cell &B();
 };
 
 

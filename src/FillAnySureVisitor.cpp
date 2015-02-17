@@ -17,7 +17,6 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         pair<int,int> position;
         int col;
         std::vector<bool>::iterator it;
-        TripleHolder fillableTriplet;
 
         for(int main_col=0; main_col<3;++main_col) {
                 // go through columns
@@ -71,22 +70,16 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                         impossibles[j][2] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
                                         
                                         // get the triplet corresponding to j
-                                        if(j == 0) {
-                                                fillableTriplet = regions[0].leftColumn();
-                                        } else if (j == 1) {
-                                                fillableTriplet = regions[0].middleColumn();
-                                        } else if (j == 2) {
-                                                fillableTriplet = regions[0].rightColumn();
-                                        }
+                                        TripleHolder fillableTriplet = regions[0].getColumn(j);
 
                                         // Cannot be place in cells that are not empty
-                                        if(!fillableTriplet.getFirst()->isEmpty()) {
+                                        if(!fillableTriplet.getFirst().isEmpty()) {
                                                 impossibles[j][0] = true;
                                         }
-                                        if(!fillableTriplet.getSecond()->isEmpty()) {
+                                        if(!fillableTriplet.getSecond().isEmpty()) {
                                                 impossibles[j][1] = true;
                                         }
-                                        if(!fillableTriplet.getThird()->isEmpty()) {
+                                        if(!fillableTriplet.getThird().isEmpty()) {
                                                 impossibles[j][2] = true;
                                         }
                                 }
@@ -96,27 +89,27 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                 if (position.first!=-1) {
                                         if(position.first == 0) {
                                                 if(position.second == 0) {
-                                                        *(regions[0].leftColumn().getFirst()) = value;
+                                                        regions[0].leftColumn().getFirst() = value;
                                                 } else if(position.second == 1) {
-                                                        *(regions[0].leftColumn().getSecond()) = value;
+                                                        regions[0].leftColumn().getSecond() = value;
                                                 } else if(position.second == 2) {
-                                                        *(regions[0].leftColumn().getThird()) = value;
+                                                        regions[0].leftColumn().getThird() = value;
                                                 }
                                         } else if(position.first == 1) {
                                                 if(position.second == 0) {
-                                                        *(regions[0].middleColumn().getFirst()) = value;
+                                                        regions[0].middleColumn().getFirst() = value;
                                                 } else if(position.second == 1) {
-                                                        *(regions[0].middleColumn().getSecond()) = value;
+                                                        regions[0].middleColumn().getSecond() = value;
                                                 } else if(position.second == 2) {
-                                                        *(regions[0].middleColumn().getThird()) = value;
+                                                        regions[0].middleColumn().getThird() = value;
                                                 }
                                         } else if(position.first == 2) {
                                                 if(position.second == 0) {
-                                                        *(regions[0].rightColumn().getFirst()) = value;
+                                                        regions[0].rightColumn().getFirst() = value;
                                                 } else if(position.second == 1) {
-                                                        *(regions[0].rightColumn().getSecond()) = value;
+                                                        regions[0].rightColumn().getSecond() = value;
                                                 } else if(position.second == 2) {
-                                                        *(regions[0].rightColumn().getThird()) = value;
+                                                        regions[0].rightColumn().getThird() = value;
                                                 }
                                         }
                                         ++changed;
