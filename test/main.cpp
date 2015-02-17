@@ -215,6 +215,7 @@ int check_cells_methods() {
     errors += (triplet.getFirst()->value!=8);
 
     cout << "My triplet is full: "<<triplet.isFull()<<", should be 1"<<endl;
+    errors += (triplet.isFull()!=1);
 
     RowHolder row(&myCell1, &myCell2, &myCell3);
     cout << "Value of the left cell of the row is: "<<row.G()->value<<" should be 8"<<endl;

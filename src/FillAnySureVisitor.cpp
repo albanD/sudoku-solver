@@ -38,14 +38,14 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                 // find the col where it should be
                                 
                                 possibleColumns = vector<bool>(3, false);
-                                position = regions[1].valuePosition(value);
-                                if (position.second != -1) {
+                                try {
+                                        position = regions[1].valuePosition(value);
                                         possibleColumns[position.second] = true;
-                                }
-                                position = regions[2].valuePosition(value);
-                                if (position.second != -1) {
+                                } catch( invalid_argument const &e) {}
+                                try {
+                                        position = regions[2].valuePosition(value);
                                         possibleColumns[position.second] = true;
-                                }
+                                } catch( invalid_argument const &e) {}
 
 
 

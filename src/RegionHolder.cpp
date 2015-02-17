@@ -84,7 +84,6 @@ bool RegionHolder::isValuePresent(unsigned char iValue) const{
 }
 
 pair<int,int> RegionHolder::valuePosition(unsigned char iValue) const{
-        if(!isValuePresent(iValue)){return pair<int,int>(-1,-1);}
 
         if(*NO==iValue) {
                 return pair<int,int>(0,0);
@@ -114,5 +113,7 @@ pair<int,int> RegionHolder::valuePosition(unsigned char iValue) const{
                 return pair<int,int>(2,2);
         }
 
-        return pair<int,int>(-1,-1);
+        // if we did not found the value, raise invalid argument error
+
+        throw std::invalid_argument("The value is not present in the region holder.");
 }
