@@ -22,9 +22,9 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
                         // main_row is the position of the row of the region we are trying to fill in main_col
                         // we place this working region in regions[0]
                         regions = std::vector<RegionHolder>();
-                        regions.push_back(ioGrid.getRegion(3*((main_row+0)%3) + main_col));
-                        regions.push_back(ioGrid.getRegion(3*((main_row+1)%3) + main_col));
-                        regions.push_back(ioGrid.getRegion(3*((main_row+2)%3) + main_col));
+                        for(i=0; i<3; ++i) {
+                                regions.push_back(ioGrid.getRegion(3*((main_row+i)%3) + main_col));
+                        }
                         
                         for(int value = 1; value<=9; ++value) {
                                 // test for all different values
