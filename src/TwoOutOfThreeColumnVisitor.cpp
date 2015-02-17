@@ -7,15 +7,10 @@ using namespace std;
 
 TwoOutOfThreeColumnVisitor::TwoOutOfThreeColumnVisitor(){}
 
-
-// For local use only
-pair<int,int> findOnlyOneNegativeInCols(std::vector<std::vector<bool>> possibles);
-
 bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
         bool changed = false;
         std::vector<RegionHolder> regions;
-        std::vector<std::vector<bool>> possibles;
-        std::vector<bool> possibleColumns;
+        std::vector<bool> presentInTriplet;
         pair<int,int> position;
         int col;
         std::vector<bool>::iterator it;
@@ -36,87 +31,66 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
                                 //
                                 if(regions[0].isValuePresent(value)){continue;}
 
-                                // value is not present in the ith region
-                                // find the col where it should be
-                                
-                                possibleColumns = vector<bool>(3, false);
-                                position = regions[1].valuePosition(value);
-                                if (position.second != -1) {
-                                        possibleColumns[position.second] = true;
-                                }
-                                position = regions[2].valuePosition(value);
-                                if (position.second != -1) {
-                                        possibleColumns[position.second] = true;
-                                }
+                                if(regions[1].isValuePresent(value) && regions[2].isValuePresent(value)) {
+                                        // value is not present in the ith region
+                                        // find the col where it should be
+                                        
+                                        presentInTriplet = vector<bool>(3, false);
+                                        position = regions[1].valuePosition(value);
+                                        presentInTriplet[position.second] = true;
+                                        position = regions[2].valuePosition(value);
+                                        presentInTriplet[position.second] = true;
 
-
-
-                                // find the rows where it should be
-                                possibles = std::vector<std::vector<bool>>();
-                                for(int j=0; j<3; ++j) {
-
-                                        // if the columns already have this value from another Region, pass
-                                        if(possibleColumns[j]) {
-                                                possibles.push_back(vector<bool>(3, true));
-                                                continue;
-                                        } else {
-                                                possibles.push_back(vector<bool>(3, false));
+                                        col=0;
+                                        it = presentInTriplet.begin();
+                                        while(*it) {
+                                                ++it;
+                                                ++col;
                                         }
+
+
+                                        // find the column where it should be
                                         
-                                        // This is the same for all j
-                                        possibles[j][0] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
-                                        possibles[j][1] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
-                                        possibles[j][2] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
+                                        presentInTriplet = vector<bool>(3, false);
                                         
+                                        presentInTriplet[0] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
+                                        presentInTriplet[1] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
+                                        presentInTriplet[2] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
                                         // Cannot be place in cells that are not empty
-                                        if(j == 0) {
+                                        
+                                        if(col == 0) {
                                                 fillableTriplet = regions[0].leftColumn();
-                                        } else if (j == 1) {
+                                        } else if (col == 1) {
                                                 fillableTriplet = regions[0].middleColumn();
-                                        } else if (j == 2) {
+                                        } else if (col == 2) {
                                                 fillableTriplet = regions[0].rightColumn();
                                         }
 
                                         if(!fillableTriplet.getFirst()->isEmpty()) {
-                                                possibles[j][0] = true;
+                                                presentInTriplet[0] = true;
                                         }
                                         if(!fillableTriplet.getSecond()->isEmpty()) {
-                                                possibles[j][1] = true;
+                                                presentInTriplet[1] = true;
                                         }
                                         if(!fillableTriplet.getThird()->isEmpty()) {
-                                                possibles[j][2] = true;
+                                                presentInTriplet[2] = true;
                                         }
-                                }
 
-                                // If there is only one possible position where it could be place it
-                                position = findOnlyOneNegativeInCols(possibles);
-                                if (position.first!=-1) {
-                                        if(position.first == 0) {
-                                                if(position.second == 0) {
-                                                        *(regions[0].leftColumn().getFirst()) = value;
-                                                } else if(position.second == 1) {
-                                                        *(regions[0].leftColumn().getSecond()) = value;
-                                                } else if(position.second == 2) {
-                                                        *(regions[0].leftColumn().getThird()) = value;
-                                                }
-                                        } else if(position.first == 1) {
-                                                if(position.second == 0) {
-                                                        *(regions[0].middleColumn().getFirst()) = value;
-                                                } else if(position.second == 1) {
-                                                        *(regions[0].middleColumn().getSecond()) = value;
-                                                } else if(position.second == 2) {
-                                                        *(regions[0].middleColumn().getThird()) = value;
-                                                }
-                                        } else if(position.first == 2) {
-                                                if(position.second == 0) {
-                                                        *(regions[0].rightColumn().getFirst()) = value;
-                                                } else if(position.second == 1) {
-                                                        *(regions[0].rightColumn().getSecond()) = value;
-                                                } else if(position.second == 2) {
-                                                        *(regions[0].rightColumn().getThird()) = value;
-                                                }
+                                        // if there is only one possile place, fill it
+
+                                        if(!presentInTriplet[0] && presentInTriplet[1] && presentInTriplet[2]) {
+                                                *(fillableTriplet.getFirst()) = value;
+                                                changed = true;
                                         }
-                                        ++changed;
+                                        if(presentInTriplet[0] && !presentInTriplet[1] && presentInTriplet[2]) {
+                                                *(fillableTriplet.getSecond()) = value;
+                                                changed = true;
+                                        }
+                                        if(presentInTriplet[0] && presentInTriplet[1] && !presentInTriplet[2]) {
+                                                *(fillableTriplet.getThird()) = value;
+                                                changed = true;
+                                        }
+
                                 }
                         }
                 } 
@@ -125,24 +99,4 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
                 
         }
         return changed;
-}
-
-pair<int,int> findOnlyOneNegativeInCols(std::vector<std::vector<bool>> possibles) {
-        pair<int,int> position(-1,-1);
-
-        int totalNegative = 0;
-        for(int i=0; i<3; ++i) {
-                for(int j=0; j<3; ++j) {
-                        if(possibles[i][j] == false) {
-                                totalNegative += 1;
-                                position = pair<int,int>(i,j);
-                        }
-                }
-        }
-
-        if(totalNegative == 1) {
-                return position;
-        }
-
-        return pair<int,int>(-1,-1);
 }
