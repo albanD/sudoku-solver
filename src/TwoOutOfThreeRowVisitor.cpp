@@ -12,7 +12,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
         std::vector<RegionHolder> regions;
         std::vector<bool> presentInTriplet;
         pair<int,int> position;
-        int line;
+        int line, i;
         std::vector<bool>::iterator it;
 
         for(int main_row=0; main_row<3;++main_row) {
@@ -54,7 +54,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                         presentInTriplet = vector<bool>(3, false);
  
                                         // is there this value already in this column?
-                                        for(int i=0; i<3; ++i) {
+                                        for(i=0; i<3; ++i) {
                                                 // for each column
                                                 for(int j=1; j<3; ++j) {
                                                         // for each other region in the column
@@ -63,32 +63,23 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                         }
                                                         
                                         
-                                        // get the possible column in the working region                                        
+                                        // get the possible row in the working region                                        
                                         TripleHolder fillableTriplet = regions[0].getRow(line);
 
-                                        // is there a value in this possible cell?
-                                        if(!fillableTriplet.getFirst().isEmpty()) {
-                                                presentInTriplet[0] = true;
-                                        }
-                                        if(!fillableTriplet.getSecond().isEmpty()) {
-                                                presentInTriplet[1] = true;
-                                        }
-                                        if(!fillableTriplet.getThird().isEmpty()) {
-                                                presentInTriplet[2] = true;
+                                        // is there a value in the cells of the possible row?
+                                        for(i=0; i<3; ++i) {
+                                                // each line
+                                                if(!fillableTriplet.getCell(i).isEmpty()) {
+                                                        presentInTriplet[i] = true;
+                                                }
                                         }
 
                                         // if there is only one possile place, fill it
-                                        if(!presentInTriplet[0] && presentInTriplet[1] && presentInTriplet[2]) {
-                                                fillableTriplet.getFirst() = value;
-                                                changed = true;
-                                        }
-                                        if(presentInTriplet[0] && !presentInTriplet[1] && presentInTriplet[2]) {
-                                                fillableTriplet.getSecond() = value;
-                                                changed = true;
-                                        }
-                                        if(presentInTriplet[0] && presentInTriplet[1] && !presentInTriplet[2]) {
-                                                fillableTriplet.getThird() = value;
-                                                changed = true;
+                                        for(i=0; i<3; ++i) {
+                                                if(!presentInTriplet[(i+0)%3] && presentInTriplet[(i+1)%3] && presentInTriplet[(i+2)%3]) {
+                                                        fillableTriplet.getCell(i) = value;
+                                                        changed = true;
+                                                }
                                         }
 
                                 }

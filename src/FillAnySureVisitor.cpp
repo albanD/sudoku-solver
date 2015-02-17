@@ -15,7 +15,7 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         std::vector<std::vector<bool>> impossibles;
         std::vector<bool> presentInColumns;
         pair<int,int> position;
-        int col;
+        int col, i;
         std::vector<bool>::iterator it;
 
         for(int main_col=0; main_col<3;++main_col) {
@@ -65,55 +65,35 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                         }
                                         
                                         // Possible or not due to the value in another column of main_row
-                                        impossibles[j][0] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
-                                        impossibles[j][1] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
-                                        impossibles[j][2] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
-                                        
+                                        for(i=0; i<3; ++i) {
+                                                // for each line
+                                                for(int k=1; k<3; ++k) {
+                                                        // for each other region in the row
+                                                        impossibles[j][i] = impossibles[j][i] || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+k)%3).getRow(i).isValuePresent(value);
+                                                }
+                                        }
+
                                         // get the triplet corresponding to j
                                         TripleHolder fillableTriplet = regions[0].getColumn(j);
 
                                         // Cannot be place in cells that are not empty
-                                        if(!fillableTriplet.getFirst().isEmpty()) {
-                                                impossibles[j][0] = true;
-                                        }
-                                        if(!fillableTriplet.getSecond().isEmpty()) {
-                                                impossibles[j][1] = true;
-                                        }
-                                        if(!fillableTriplet.getThird().isEmpty()) {
-                                                impossibles[j][2] = true;
+                                        for(i=0; i<3; ++i) {
+                                                // each line
+                                                if(!fillableTriplet.getCell(i).isEmpty()) {
+                                                        impossibles[j][i] = true;
+                                                }
                                         }
                                 }
 
                                 // If there is only one possible position where it could be, place it
-                                position = findOnlyOneNegative(impossibles);
-                                if (position.first!=-1) {
-                                        if(position.first == 0) {
-                                                if(position.second == 0) {
-                                                        regions[0].leftColumn().getFirst() = value;
-                                                } else if(position.second == 1) {
-                                                        regions[0].leftColumn().getSecond() = value;
-                                                } else if(position.second == 2) {
-                                                        regions[0].leftColumn().getThird() = value;
-                                                }
-                                        } else if(position.first == 1) {
-                                                if(position.second == 0) {
-                                                        regions[0].middleColumn().getFirst() = value;
-                                                } else if(position.second == 1) {
-                                                        regions[0].middleColumn().getSecond() = value;
-                                                } else if(position.second == 2) {
-                                                        regions[0].middleColumn().getThird() = value;
-                                                }
-                                        } else if(position.first == 2) {
-                                                if(position.second == 0) {
-                                                        regions[0].rightColumn().getFirst() = value;
-                                                } else if(position.second == 1) {
-                                                        regions[0].rightColumn().getSecond() = value;
-                                                } else if(position.second == 2) {
-                                                        regions[0].rightColumn().getThird() = value;
-                                                }
+                                try {
+                                        position = findOnlyOneNegative(impossibles);
+                                        if (position.first!=-1) {
+                                                regions[0].getColumn(position.first).getCell(position.second) = value;
+
+                                                ++changed;
                                         }
-                                        ++changed;
-                                }
+                                } catch( invalid_argument const &e) {}
                         }
                 } 
 
@@ -140,5 +120,5 @@ pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles) {
                 return position;
         }
 
-        return pair<int,int>(-1,-1);
+        throw std::invalid_argument("The value is not present in the region holder.");
 }

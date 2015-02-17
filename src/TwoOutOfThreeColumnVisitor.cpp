@@ -12,7 +12,7 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
         std::vector<RegionHolder> regions;
         std::vector<bool> presentInTriplet;
         pair<int,int> position;
-        int col;
+        int col, i;
         std::vector<bool>::iterator it;
 
         for(int main_col=0; main_col<3;++main_col) {
@@ -55,7 +55,7 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
                                         presentInTriplet = vector<bool>(3, false);
                                         
                                         // cannot be on the same line as a the same value in another region from the same row
-                                        for(int i=0; i<3; ++i) {
+                                        for(i=0; i<3; ++i) {
                                                 // for each line
                                                 for(int j=1; j<3; ++j) {
                                                         // for each other region in the row
@@ -66,28 +66,20 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
                                         // Cannot be in a cell where there is already an element
                                         TripleHolder fillableTriplet = regions[0].getColumn(col);
 
-                                        if(!fillableTriplet.getFirst().isEmpty()) {
-                                                presentInTriplet[0] = true;
-                                        }
-                                        if(!fillableTriplet.getSecond().isEmpty()) {
-                                                presentInTriplet[1] = true;
-                                        }
-                                        if(!fillableTriplet.getThird().isEmpty()) {
-                                                presentInTriplet[2] = true;
+                                        // is there a value in the cells of the possible column?
+                                        for(i=0; i<3; ++i) {
+                                                // each line
+                                                if(!fillableTriplet.getCell(i).isEmpty()) {
+                                                        presentInTriplet[i] = true;
+                                                }
                                         }
 
                                         // if there is only one possile place, fill it
-                                        if(!presentInTriplet[0] && presentInTriplet[1] && presentInTriplet[2]) {
-                                                fillableTriplet.getFirst() = value;
-                                                changed = true;
-                                        }
-                                        if(presentInTriplet[0] && !presentInTriplet[1] && presentInTriplet[2]) {
-                                                fillableTriplet.getSecond() = value;
-                                                changed = true;
-                                        }
-                                        if(presentInTriplet[0] && presentInTriplet[1] && !presentInTriplet[2]) {
-                                                fillableTriplet.getThird() = value;
-                                                changed = true;
+                                        for(i=0; i<3; ++i) {
+                                                if(!presentInTriplet[(i+0)%3] && presentInTriplet[(i+1)%3] && presentInTriplet[(i+2)%3]) {
+                                                        fillableTriplet.getCell(i) = value;
+                                                        changed = true;
+                                                }
                                         }
 
                                 }
