@@ -1,0 +1,101 @@
+#include "TwoOutOfThreeRowVisitor.hpp"
+#include "Grid.hpp"
+#include "RegionHolder.hpp"
+#include <vector>
+#include <iostream>
+using namespace std;
+
+TwoOutOfThreeRowVisitor::TwoOutOfThreeRowVisitor(){}
+
+bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
+        bool changed = false;
+        std::vector<RegionHolder> regions;
+        std::vector<bool> presentInTriplet;
+        pair<int,int> position;
+        int line;
+        std::vector<bool>::iterator it;
+        TripleHolder fillableTriplet;
+
+        for(int main_row=0; main_row<3;++main_row) {
+                // horizontal
+
+                for(int i=0; i<3; ++i) {
+                        // work with the ith region in this line
+                        regions = std::vector<RegionHolder>();
+                        regions.push_back(ioGrid.getRegion(3*main_row + (i+0)%3));
+                        regions.push_back(ioGrid.getRegion(3*main_row + (i+1)%3));
+                        regions.push_back(ioGrid.getRegion(3*main_row + (i+2)%3));
+                        
+                        for(int value = 1; value<=9; ++value) {
+                                // test for all different values
+                                //
+                                if(regions[0].isValuePresent(value)){continue;}
+
+                                if(regions[1].isValuePresent(value) && regions[2].isValuePresent(value)) {
+                                        // value is not present in the ith region
+                                        // find the line where it should be
+                                        
+                                        presentInTriplet = vector<bool>(3, false);
+                                        position = regions[1].valuePosition(value);
+                                        presentInTriplet[position.first] = true;
+                                        position = regions[2].valuePosition(value);
+                                        presentInTriplet[position.first] = true;
+
+                                        line=0;
+                                        it = presentInTriplet.begin();
+                                        while(*it) {
+                                                ++it;
+                                                ++line;
+                                        }
+
+
+                                        // find the column where it should be
+                                        
+                                        presentInTriplet = vector<bool>(3, false);
+ 
+                                        presentInTriplet[0] = ioGrid.getRegion(3*((main_row+1)%3) + (i+0)%3).leftColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (i+0)%3).leftColumn().isValuePresent(value); 
+                                        presentInTriplet[1] = ioGrid.getRegion(3*((main_row+1)%3) + (i+0)%3).middleColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (i+0)%3).middleColumn().isValuePresent(value); 
+                                        presentInTriplet[2] = ioGrid.getRegion(3*((main_row+1)%3) + (i+0)%3).rightColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (i+0)%3).rightColumn().isValuePresent(value); 
+
+                                        // Cannot be place in cells that are not empty
+                                        
+                                        if(line == 0) {
+                                                fillableTriplet = regions[0].topRow();
+                                        } else if (line == 1) {
+                                                fillableTriplet = regions[0].middleRow();
+                                        } else if (line == 2) {
+                                                fillableTriplet = regions[0].bottomRow();
+                                        }
+
+                                        if(!fillableTriplet.getFirst()->isEmpty()) {
+                                                presentInTriplet[0] = true;
+                                        }
+                                        if(!fillableTriplet.getSecond()->isEmpty()) {
+                                                presentInTriplet[1] = true;
+                                        }
+                                        if(!fillableTriplet.getThird()->isEmpty()) {
+                                                presentInTriplet[2] = true;
+                                        }
+
+                                        // if there is only one possile place, fill it
+
+                                        if(!presentInTriplet[0] && presentInTriplet[1] && presentInTriplet[2]) {
+                                                *(fillableTriplet.getFirst()) = value;
+                                                changed = true;
+                                        }
+                                        if(presentInTriplet[0] && !presentInTriplet[1] && presentInTriplet[2]) {
+                                                *(fillableTriplet.getSecond()) = value;
+                                                changed = true;
+                                        }
+                                        if(presentInTriplet[0] && presentInTriplet[1] && !presentInTriplet[2]) {
+                                                *(fillableTriplet.getThird()) = value;
+                                                changed = true;
+                                        }
+
+                                }
+                        }
+                } 
+              
+        }
+        return changed;
+}

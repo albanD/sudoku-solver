@@ -27,7 +27,7 @@ public:
 
         RegionHolder getRegion(int reg_index);
 
-        void accept(class IVisitor* v);
+        bool accept(class IVisitor* v);
         void show();
         Cell* getCell(int row, int col);
 };

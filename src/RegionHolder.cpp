@@ -1,6 +1,5 @@
 #include "RegionHolder.hpp"
 
-
 RegionHolder::RegionHolder(Region &region):
         NO(&(region.NO)),
         N(&(region.N)),
@@ -82,4 +81,38 @@ bool RegionHolder::isValuePresent(unsigned char iValue) const{
         isValuePresent|= (*S == iValue);
         isValuePresent|= (*SE == iValue);
 
+}
+
+pair<int,int> RegionHolder::valuePosition(unsigned char iValue) const{
+        if(!isValuePresent(iValue)){return pair<int,int>(-1,-1);}
+
+        if(*NO==iValue) {
+                return pair<int,int>(0,0);
+        }
+        if(*N==iValue) {
+                return pair<int,int>(0,1);
+        }
+        if(*NE==iValue) {
+                return pair<int,int>(0,2);
+        }
+        if(*O==iValue) {
+                return pair<int,int>(1,0);
+        }
+        if(*C==iValue) {
+                return pair<int,int>(1,1);
+        }
+        if(*E==iValue) {
+                return pair<int,int>(1,2);
+        }
+        if(*SO==iValue) {
+                return pair<int,int>(2,0);
+        }
+        if(*S==iValue) {
+                return pair<int,int>(2,1);
+        }
+        if(*SE==iValue) {
+                return pair<int,int>(2,2);
+        }
+
+        return pair<int,int>(-1,-1);
 }

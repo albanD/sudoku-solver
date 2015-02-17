@@ -1,4 +1,5 @@
 #include "TripleHolder.hpp"
+#include <iostream>
 
 TripleHolder::TripleHolder(Cell* const cell1, Cell* const cell2,Cell* const cell3):
         first(cell1),
@@ -29,4 +30,15 @@ bool TripleHolder::isValuePresent(unsigned char iValue) const{
         isPresent |= (*second == iValue);
         isPresent |= (*third == iValue);
         return isPresent;
+}
+
+bool TripleHolder::isFull() const {
+        unsigned char noElement = '0';
+        return !(*first == noElement) || !(*second == noElement) || !(*third == noElement);
+}
+
+TripleHolder & TripleHolder::operator=(TripleHolder rh) {
+        first = rh.getFirst();
+        second = rh.getSecond();
+        third = rh.getThird();
 }

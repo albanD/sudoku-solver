@@ -50,7 +50,13 @@ Cell* Grid::getCell(int row, int col){
 
 void Grid::show(){
         for(int i=0;i<9;++i){
+                if (i%3==0) {
+                        cout<<endl;
+                }
                 for(int j=0;j<9;++j){
+                        if (j%3==0) {
+                                cout<<"  ";
+                        }
                         int value = getCell(i,j)->value;
                         cout<< value<<" ";
                 }
@@ -58,6 +64,6 @@ void Grid::show(){
         }
 }
 
-void Grid::accept(IVisitor* v){
-        v->Visit(*this);
+bool Grid::accept(IVisitor* v){
+        return v->Visit(*this);
 };
