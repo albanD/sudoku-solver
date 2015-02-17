@@ -17,24 +17,26 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
         TripleHolder fillableTriplet;
 
         for(int main_row=0; main_row<3;++main_row) {
-                // horizontal
+                // main_row is the row we are working with
 
-                for(int i=0; i<3; ++i) {
-                        // work with the ith region in this line
+                for(int main_col=0; main_col<3; ++main_col) {
+                        // main_col is the column in the main_row we are trying to fill
+                        // we place this working region in regions[0]
                         regions = std::vector<RegionHolder>();
-                        regions.push_back(ioGrid.getRegion(3*main_row + (i+0)%3));
-                        regions.push_back(ioGrid.getRegion(3*main_row + (i+1)%3));
-                        regions.push_back(ioGrid.getRegion(3*main_row + (i+2)%3));
+                        regions.push_back(ioGrid.getRegion(3*main_row + (main_col+0)%3));
+                        regions.push_back(ioGrid.getRegion(3*main_row + (main_col+1)%3));
+                        regions.push_back(ioGrid.getRegion(3*main_row + (main_col+2)%3));
                         
                         for(int value = 1; value<=9; ++value) {
                                 // test for all different values
-                                //
+                                
+                                // if this value is already set, discard this value for this region
                                 if(regions[0].isValuePresent(value)){continue;}
 
+                                // if the two other regions in main_row contains the value, continue
                                 if(regions[1].isValuePresent(value) && regions[2].isValuePresent(value)) {
-                                        // value is not present in the ith region
+
                                         // find the line where it should be
-                                        
                                         presentInTriplet = vector<bool>(3, false);
                                         position = regions[1].valuePosition(value);
                                         presentInTriplet[position.first] = true;
@@ -50,15 +52,14 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
 
 
                                         // find the column where it should be
-                                        
                                         presentInTriplet = vector<bool>(3, false);
  
-                                        presentInTriplet[0] = ioGrid.getRegion(3*((main_row+1)%3) + (i+0)%3).leftColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (i+0)%3).leftColumn().isValuePresent(value); 
-                                        presentInTriplet[1] = ioGrid.getRegion(3*((main_row+1)%3) + (i+0)%3).middleColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (i+0)%3).middleColumn().isValuePresent(value); 
-                                        presentInTriplet[2] = ioGrid.getRegion(3*((main_row+1)%3) + (i+0)%3).rightColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (i+0)%3).rightColumn().isValuePresent(value); 
+                                        // is there this value already in this column?
+                                        presentInTriplet[0] = ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).leftColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (main_col+0)%3).leftColumn().isValuePresent(value); 
+                                        presentInTriplet[1] = ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).middleColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (main_col+0)%3).middleColumn().isValuePresent(value); 
+                                        presentInTriplet[2] = ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).rightColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (main_col+0)%3).rightColumn().isValuePresent(value); 
 
-                                        // Cannot be place in cells that are not empty
-                                        
+                                        // get the possible column in the working region                                        
                                         if(line == 0) {
                                                 fillableTriplet = regions[0].topRow();
                                         } else if (line == 1) {
@@ -67,6 +68,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                                 fillableTriplet = regions[0].bottomRow();
                                         }
 
+                                        // is there a value in this possible cell?
                                         if(!fillableTriplet.getFirst()->isEmpty()) {
                                                 presentInTriplet[0] = true;
                                         }
@@ -78,7 +80,6 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                         }
 
                                         // if there is only one possile place, fill it
-
                                         if(!presentInTriplet[0] && presentInTriplet[1] && presentInTriplet[2]) {
                                                 *(fillableTriplet.getFirst()) = value;
                                                 changed = true;

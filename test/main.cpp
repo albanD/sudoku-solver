@@ -333,7 +333,7 @@ int check_end_part_3() {
         somethingDone |= myGrid.accept(&onlySquareVisitor);
         somethingDone |= myGrid.accept(&twoOutOfThreeRowVisitor);
         somethingDone |= myGrid.accept(&twoOutOfThreeColumnVisitor);
-        somethingDone |= myGrid.accept(&fillAnySureVisitor);
+        //somethingDone |= myGrid.accept(&fillAnySureVisitor);
     }
     myGrid.show();
 

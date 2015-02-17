@@ -20,22 +20,24 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         TripleHolder fillableTriplet;
 
         for(int main_col=0; main_col<3;++main_col) {
-                // vertical
+                // go through columns
                 
-                for(int i=0; i<3; ++i) {
-                        // work with the ith region in this row
+                for(int main_row=0; main_row<3; ++main_row) {
+                        // go through rows
+
+                        // set the working region in regions[0]
                         regions = std::vector<RegionHolder>();
-                        regions.push_back(ioGrid.getRegion(3*((i+0)%3) + main_col));
-                        regions.push_back(ioGrid.getRegion(3*((i+1)%3) + main_col));
-                        regions.push_back(ioGrid.getRegion(3*((i+2)%3) + main_col));
+                        regions.push_back(ioGrid.getRegion(3*((main_row+0)%3) + main_col));
+                        regions.push_back(ioGrid.getRegion(3*((main_row+1)%3) + main_col));
+                        regions.push_back(ioGrid.getRegion(3*((main_row+2)%3) + main_col));
                         
                         for(int value = 1; value<=9; ++value) {
                                 // test for all different values
-                                //
+                                
+                                // if value is in working region skip it
                                 if(regions[0].isValuePresent(value)){continue;}
 
-                                // value is not present in the ith region
-                                // find the col where it should be
+                                // find the col where it can be
                                 
                                 possibleColumns = vector<bool>(3, false);
                                 try {
@@ -49,9 +51,11 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
 
 
 
-                                // find the rows where it should be
+                                // find the rows where it should be and fill a 3x3 array of bool
+                                // with true if cannot be at this place, false if possible
                                 possibles = std::vector<std::vector<bool>>();
                                 for(int j=0; j<3; ++j) {
+                                        // j is the possible columns in the working region
 
                                         // if the columns already have this value from another Region, pass
                                         if(possibleColumns[j]) {
@@ -61,12 +65,12 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                                 possibles.push_back(vector<bool>(3, false));
                                         }
                                         
-                                        // This is the same for all j
-                                        possibles[j][0] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
-                                        possibles[j][1] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
-                                        possibles[j][2] = ioGrid.getRegion(3*((i+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((i+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
+                                        // Possible or not due to the value in another column of main_row
+                                        possibles[j][0] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
+                                        possibles[j][1] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
+                                        possibles[j][2] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
                                         
-                                        // Cannot be place in cells that are not empty
+                                        // get the triplet corresponding to j
                                         if(j == 0) {
                                                 fillableTriplet = regions[0].leftColumn();
                                         } else if (j == 1) {
@@ -75,6 +79,7 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                                 fillableTriplet = regions[0].rightColumn();
                                         }
 
+                                        // Cannot be place in cells that are not empty
                                         if(!fillableTriplet.getFirst()->isEmpty()) {
                                                 possibles[j][0] = true;
                                         }
@@ -86,7 +91,7 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
                                         }
                                 }
 
-                                // If there is only one possible position where it could be place it
+                                // If there is only one possible position where it could be, place it
                                 position = findOnlyOneNegative(possibles);
                                 if (position.first!=-1) {
                                         if(position.first == 0) {
