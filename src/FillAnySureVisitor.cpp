@@ -7,13 +7,13 @@ FillAnySureVisitor::FillAnySureVisitor(){}
 
 
 // For local use only
-pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> possibles);
+pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles);
 
 bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         bool changed = false;
         std::vector<RegionHolder> regions;
-        std::vector<std::vector<bool>> possibles;
-        std::vector<bool> possibleColumns;
+        std::vector<std::vector<bool>> impossibles;
+        std::vector<bool> presentInColumns;
         pair<int,int> position;
         int col;
         std::vector<bool>::iterator it;
@@ -39,36 +39,36 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
 
                                 // find the col where it can be
                                 
-                                possibleColumns = vector<bool>(3, false);
+                                presentInColumns = vector<bool>(3, false);
                                 try {
                                         position = regions[1].valuePosition(value);
-                                        possibleColumns[position.second] = true;
+                                        presentInColumns[position.second] = true;
                                 } catch( invalid_argument const &e) {}
                                 try {
                                         position = regions[2].valuePosition(value);
-                                        possibleColumns[position.second] = true;
+                                        presentInColumns[position.second] = true;
                                 } catch( invalid_argument const &e) {}
 
 
 
                                 // find the rows where it should be and fill a 3x3 array of bool
                                 // with true if cannot be at this place, false if possible
-                                possibles = std::vector<std::vector<bool>>();
+                                impossibles = std::vector<std::vector<bool>>();
                                 for(int j=0; j<3; ++j) {
                                         // j is the possible columns in the working region
 
                                         // if the columns already have this value from another Region, pass
-                                        if(possibleColumns[j]) {
-                                                possibles.push_back(vector<bool>(3, true));
+                                        if(presentInColumns[j]) {
+                                                impossibles.push_back(vector<bool>(3, true));
                                                 continue;
                                         } else {
-                                                possibles.push_back(vector<bool>(3, false));
+                                                impossibles.push_back(vector<bool>(3, false));
                                         }
                                         
                                         // Possible or not due to the value in another column of main_row
-                                        possibles[j][0] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
-                                        possibles[j][1] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
-                                        possibles[j][2] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
+                                        impossibles[j][0] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
+                                        impossibles[j][1] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
+                                        impossibles[j][2] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
                                         
                                         // get the triplet corresponding to j
                                         if(j == 0) {
@@ -81,18 +81,18 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
 
                                         // Cannot be place in cells that are not empty
                                         if(!fillableTriplet.getFirst()->isEmpty()) {
-                                                possibles[j][0] = true;
+                                                impossibles[j][0] = true;
                                         }
                                         if(!fillableTriplet.getSecond()->isEmpty()) {
-                                                possibles[j][1] = true;
+                                                impossibles[j][1] = true;
                                         }
                                         if(!fillableTriplet.getThird()->isEmpty()) {
-                                                possibles[j][2] = true;
+                                                impossibles[j][2] = true;
                                         }
                                 }
 
                                 // If there is only one possible position where it could be, place it
-                                position = findOnlyOneNegative(possibles);
+                                position = findOnlyOneNegative(impossibles);
                                 if (position.first!=-1) {
                                         if(position.first == 0) {
                                                 if(position.second == 0) {
@@ -130,13 +130,13 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         return changed;
 }
 
-pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> possibles) {
+pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles) {
         pair<int,int> position(-1,-1);
 
         int totalNegative = 0;
         for(int i=0; i<3; ++i) {
                 for(int j=0; j<3; ++j) {
-                        if(possibles[i][j] == false) {
+                        if(impossibles[i][j] == false) {
                                 totalNegative += 1;
                                 position = pair<int,int>(i,j);
                         }

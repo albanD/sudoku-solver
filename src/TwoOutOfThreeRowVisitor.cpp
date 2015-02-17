@@ -55,10 +55,15 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                         presentInTriplet = vector<bool>(3, false);
  
                                         // is there this value already in this column?
-                                        presentInTriplet[0] = ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).leftColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (main_col+0)%3).leftColumn().isValuePresent(value); 
-                                        presentInTriplet[1] = ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).middleColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (main_col+0)%3).middleColumn().isValuePresent(value); 
-                                        presentInTriplet[2] = ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).rightColumn().isValuePresent(value) || ioGrid.getRegion(3*((main_row+2)%3) + (main_col+0)%3).rightColumn().isValuePresent(value); 
-
+                                        for(int i=0; i<3; ++i) {
+                                                // for each column
+                                                for(int j=1; j<3; ++j) {
+                                                        // for each other region in the column
+                                                        presentInTriplet[i] = presentInTriplet[i] || ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).getColumn(i).isValuePresent(value);
+                                                }
+                                        }
+                                                        
+                                        
                                         // get the possible column in the working region                                        
                                         if(line == 0) {
                                                 fillableTriplet = regions[0].topRow();

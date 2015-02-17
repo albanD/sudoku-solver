@@ -56,10 +56,14 @@ bool TwoOutOfThreeColumnVisitor::Visit(Grid &ioGrid) const{
                                         presentInTriplet = vector<bool>(3, false);
                                         
                                         // cannot be on the same line as a the same value in another region from the same row
-                                        presentInTriplet[0] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).topRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).topRow().isValuePresent(value); 
-                                        presentInTriplet[1] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).middleRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).middleRow().isValuePresent(value); 
-                                        presentInTriplet[2] = ioGrid.getRegion(3*((main_row+0)%3) + (main_col+1)%3).bottomRow().isValuePresent(value) || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+2)%3).bottomRow().isValuePresent(value); 
-                                        
+                                        for(int i=0; i<3; ++i) {
+                                                // for each line
+                                                for(int j=1; j<3; ++j) {
+                                                        // for each other region in the row
+                                                        presentInTriplet[i] = presentInTriplet[i] || ioGrid.getRegion(3*((main_row+0)%3) + (main_col+j)%3).getRow(i).isValuePresent(value);
+                                                }
+                                        }
+
                                         // Cannot be in a cell where there is already an element
                                         if(col == 0) {
                                                 fillableTriplet = regions[0].leftColumn();
