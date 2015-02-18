@@ -4,6 +4,14 @@
 #include "TripleTripleHolder.hpp"
 #include "Grid.hpp"
 #include "IVisitor.hpp"
+#include "ValueEliminator.hpp"
+#include "OnlyOneChoiceInColumnVisitor.hpp"
+#include "OnlyOneChoiceInRegionVisitor.hpp"
+#include "OnlyOneChoiceInRowVisitor.hpp"
+#include "OnlySquareVisitor.hpp"
+#include "TwoOutOfThreeColumnVisitor.hpp"
+#include "TwoOutOfThreeRowVisitor.hpp"
+#include "FillAnySureVisitor.hpp"
 #include <array>
 #include <iostream>
 
@@ -88,4 +96,21 @@ bool Grid::isConsistent() {
         }
 
         return true;
+}
+
+Grid Grid::getCopy() {
+        array<array<Region,3>,3> newRegions = array<array<Region,3>,3>();
+
+        for(int i=0; i<3; ++i) {
+                for(int j=0; j<3; ++j) {
+                        RegionHolder newrh(newRegions[i][j]);
+                        RegionHolder oldrh = getRegion(i*3 + j);
+                        for(int k=0; k<9; ++k) {
+                                newrh.getCell(k) = oldrh.getCell(k);
+                        }
+                }
+        }
+
+        return Grid(newRegions);
+}
 }

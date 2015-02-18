@@ -4,6 +4,7 @@
 #include "RegionHolder.hpp"
 #include "Cell.hpp"
 #include <array>
+#include <exception>
 
 using namespace std;
 
@@ -32,6 +33,15 @@ public:
         Cell& getCell(int row, int col);
 
         bool isConsistent();
+
+        Grid getCopy();
+
+class InvalidGridException: public exception {
+public:
+        InvalidGridException() throw(){ };
+        ~InvalidGridException() throw(){};
+
+        virtual const char* what() const throw() {return "The Grid is invalid";};
 };
 
 #endif
