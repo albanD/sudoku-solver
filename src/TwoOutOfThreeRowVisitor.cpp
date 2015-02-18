@@ -2,8 +2,6 @@
 #include "Grid.hpp"
 #include "RegionHolder.hpp"
 #include <vector>
-#include <iostream>
-using namespace std;
 
 TwoOutOfThreeRowVisitor::TwoOutOfThreeRowVisitor(){}
 
@@ -34,7 +32,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
 
                                 // if the two other regions in main_row contains the value, continue
                                 if(regions[1].isValuePresent(value) && regions[2].isValuePresent(value)) {
-
+                                        
                                         // find the line where it should be
                                         presentInTriplet = vector<bool>(3, false);
                                         position = regions[1].valuePosition(value);
@@ -58,7 +56,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                                 // for each column
                                                 for(int j=1; j<3; ++j) {
                                                         // for each other region in the column
-                                                        presentInTriplet[i] = presentInTriplet[i] || ioGrid.getRegion(3*((main_row+1)%3) + (main_col+0)%3).getColumn(i).isValuePresent(value);
+                                                        presentInTriplet[i] = presentInTriplet[i] || ioGrid.getRegion(3*((main_row+j)%3) + (main_col+0)%3).getColumn(i).isValuePresent(value);
                                                 }
                                         }
                                                         

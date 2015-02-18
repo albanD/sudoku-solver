@@ -85,7 +85,7 @@ bool RegionHolder::isValuePresent(unsigned char iValue) const{
 
 bool RegionHolder::isFull() const {
         for(int i=0; i<9; ++i) {
-                if(getCell(i)==(unsigned char)'0') {
+                if(getCell(i).value==0) {
                         return false;
                 }
         }

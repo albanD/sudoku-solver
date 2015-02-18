@@ -20,7 +20,7 @@ public:
         Region();
         bool isFull() const;
 private:
-        Cell generate_cell(std::string::iterator iter);
+        Cell generate_cell(char s_value);
 
 };
 
