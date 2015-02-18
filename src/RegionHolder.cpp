@@ -83,6 +83,15 @@ bool RegionHolder::isValuePresent(unsigned char iValue) const{
 
 }
 
+bool RegionHolder::isFull() const {
+        for(int i=0; i<9; ++i) {
+                if(getCell(i)==(unsigned char)'0') {
+                        return false;
+                }
+        }
+        return true;
+}
+
 pair<int,int> RegionHolder::valuePosition(unsigned char iValue) const{
 
         for(int i=0; i<9; i++) {

@@ -34,6 +34,7 @@ public:
 
         void flagValues(ValueEliminator &ve) const;
         bool isValuePresent(unsigned char iValue) const;
+        bool isFull() const;
         pair<int,int> valuePosition(unsigned char iValue) const;
         
 private:
