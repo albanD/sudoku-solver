@@ -1,6 +1,7 @@
 #include "Region.hpp"
 #include "ColumnHolder.hpp"
 #include "RegionHolder.hpp"
+#include "TripleTripleHolder.hpp"
 #include "Grid.hpp"
 #include "IVisitor.hpp"
 #include <array>
@@ -67,3 +68,24 @@ void Grid::show(){
 bool Grid::accept(IVisitor& v){
         return v.Visit(*this);
 };
+
+bool Grid::isConsistent() {
+        int i,j;
+
+        for(i=0; i<9; ++i) {
+                // test each region
+                if(!(TripleTripleHolder(getRegion(i)).isConsistent())) {
+                        return false;
+                }
+                //test each column
+                if(!(TripleTripleHolder(getRegion(i/3).getColumn(i%3), getRegion(i/3+3).getColumn(i%3), getRegion(i/3+6).getColumn(i%3)).isConsistent())) {
+                        return false;
+                }
+                // test each row
+                if(!(TripleTripleHolder(getRegion((i/3)*3).getRow(i%3), getRegion((i/3)*3+1).getRow(i%3), getRegion((i/3)*3+2).getRow(i%3)).isConsistent())) {
+                        return false;
+                }
+        }
+
+        return true;
+}

@@ -25,6 +25,7 @@ int check_full_sudoku();
 int check_intermediary();
 int check_two_out_of_three();
 int check_end_part_3();
+int check_part_4();
 
 int main() {
     int error_happened = 0;
@@ -49,6 +50,9 @@ int main() {
 
     cout<<endl<<"Starting to check all the simple methods on the given test grid:"<<endl;
     error_happened += check_end_part_3();
+
+    cout<<endl<<"Starting to check elements for part 4:"<<endl;
+    error_happened += check_part_4();
 
     return error_happened;
 }
@@ -335,10 +339,30 @@ int check_end_part_3() {
         somethingDone |= myGrid.accept(twoOutOfThreeColumnVisitor);
         somethingDone |= myGrid.accept(fillAnySureVisitor);
     }
-    myGrid.show();
 
     cout<<"Simple method should have filled the grid. Grid.isFull="<<myGrid.isFull()<<" (1 expected)"<<endl;
     cout<<"Does not trigger any error because the grid is not duable with these methods..."<<endl;
+
+    return errors;
+}
+
+int check_part_4() {
+    int errors = 0;
+
+    array<array<Region,3>,3> content_col= {
+        Region("295431876"), Region("743865192"), Region("861927543"),
+        Region("387612549"), Region("459387216"), Region("21649573-"),
+        Region("763928154"), Region("524671938"), Region("18935467-")
+    };
+    Grid myGrid(content_col);
+
+    cout<<"Testing if grid is consistent, should be 1, result: "<<myGrid.isConsistent()<<endl;
+    errors += (myGrid.isConsistent()!=1);
+
+    cout<<"Breaking the grid consistency."<<endl;
+    myGrid.getCell(0,1) = 2;
+    cout<<"Testing if grid is consistent, should be 0, result: "<<myGrid.isConsistent()<<endl;
+    errors += (myGrid.isConsistent()!=0);
 
     return errors;
 }

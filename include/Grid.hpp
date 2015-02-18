@@ -30,6 +30,8 @@ public:
         bool accept(class IVisitor& v);
         void show();
         Cell& getCell(int row, int col);
+
+        bool isConsistent();
 };
 
 #endif
