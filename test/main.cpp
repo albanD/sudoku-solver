@@ -92,7 +92,7 @@ int check_full_sudoku(){
     array<array<Region,3>,3> content= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("216495738"),
-        Region("763928154"), Region("534671938"), Region("18935467-")
+        Region("763928154"), Region("524671938"), Region("18935467-")
     };
 
     Grid myGrid_row(content);
@@ -128,7 +128,7 @@ int check_intermediary(){
     array<array<Region,3>,3> content_row= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("216495738"),
-        Region("763928-54"), Region("534671938"), Region("18935467-")
+        Region("763928-54"), Region("524671938"), Region("18935467-")
     };
     Grid myGrid_square_row(content_row);
     myGrid_square_row.accept(square_visitor);
@@ -141,7 +141,7 @@ int check_intermediary(){
     array<array<Region,3>,3> content_col= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("21649573-"),
-        Region("763928154"), Region("534671938"), Region("18935467-")
+        Region("763928154"), Region("524671938"), Region("18935467-")
     };
     Grid myGrid_square_col(content_col);
     myGrid_square_col.accept(square_visitor);
