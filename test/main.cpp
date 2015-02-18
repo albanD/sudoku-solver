@@ -249,7 +249,7 @@ int check_region_methods() {
     // Check that an exception triggers
     bool exception_raised = false;
     try {
-        Region myRegion = Region("12345-------");
+        myRegion = Region("12345-------");
         myRegion.isFull(); // Use the myRegion variable to prevent compilation warning
     } catch(invalid_argument const& e) {
         cout << "Caught a Region exception as expected" <<endl;
@@ -326,6 +326,7 @@ int check_end_part_3() {
         Region("782----5-"), Region("---------"), Region("-9----726"),
         Region("24-8--6-5"), Region("1----48--"), Region("8--5-----")
     };
+
     Grid myGrid(content_row);
 
     bool somethingDone = true;
@@ -337,7 +338,7 @@ int check_end_part_3() {
         somethingDone |= myGrid.accept(onlySquareVisitor);
         somethingDone |= myGrid.accept(twoOutOfThreeRowVisitor);
         somethingDone |= myGrid.accept(twoOutOfThreeColumnVisitor);
-        somethingDone |= myGrid.accept(fillAnySureVisitor);
+        //somethingDone |= myGrid.accept(fillAnySureVisitor);
     }
 
     cout<<"Simple method should have filled the grid. Grid.isFull="<<myGrid.isFull()<<" (1 expected)"<<endl;

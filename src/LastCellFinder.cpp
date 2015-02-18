@@ -6,6 +6,7 @@
 using namespace std;
 
 LastCellFinder::LastCellFinder(TripleHolder h1, TripleHolder h2, TripleHolder h3){
+        holders = std::vector<TripleHolder>();
         holders.push_back(h1);
         holders.push_back(h2);
         holders.push_back(h3);

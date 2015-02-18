@@ -4,6 +4,8 @@
 bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
         bool changed_something = false;
 
+        unordered_set<int> fpossibilities, spossibilities, availables;
+
         // Only Square on each row
         for(int row=0; row<9; ++row){
                 // ensure that the rule is applicable
@@ -25,16 +27,21 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
 
                 // Find the possible values according to the other constraints
                 int freg_index = (row/3)*3 + (fc/3);
-                unordered_set<int> fpossibilities = intersection(colPossibilities(fc, ioGrid).availableValue(),
+                fpossibilities = intersection(colPossibilities(fc, ioGrid).availableValue(),
                                                                  regPossibilities(freg_index, ioGrid).availableValue());
                 int sreg_index = (row/3)*3 + (sc/3);
-                unordered_set<int> spossibilities = intersection(colPossibilities(sc, ioGrid).availableValue(),
+                spossibilities = intersection(colPossibilities(sc, ioGrid).availableValue(),
                                                                  regPossibilities(sreg_index, ioGrid).availableValue());
 
                 // Figure out if one Cell cannot take one of the row's missing value-> she must take the other
                 bool changed_one = false;
-                unordered_set<int> availables = ve.availableValue();
+                availables = ve.availableValue();
                 for(unordered_set<int>::iterator it=availables.begin(), end=availables.end(); it!=end;it++){
+                        // Check if we are in a valid state
+                        if((fpossibilities.count(*it)==0) && (spossibilities.count(*it)==0)) {
+                                throw InvalidGridException();
+                        }
+
                         if(fpossibilities.count(*it)==0){ //we cannot put this value in first
                                 ioGrid.getCell(row, sc) = *it; //so we put it in second
                                 availables.erase(*it); // remove it from the set, so that only the other remains
@@ -52,6 +59,10 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                 // If we manage to set one, we can set the other with the remaining value
                 if(changed_one){
                         int last_missing_value = *(availables.begin());
+                        // Check if we are in a valid state
+                        if((fpossibilities.count(last_missing_value)==0) && (spossibilities.count(last_missing_value)==0)) {
+                                throw InvalidGridException();
+                        }
                         if(ioGrid.getCell(row,fc).isEmpty()){ //The first is the one that didn't get filled
                                 ioGrid.getCell(row,fc)=last_missing_value;
                         } else {
@@ -82,16 +93,21 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
 
                 // Find the possible values according to the other constraints
                 int freg_index = (fr/3)*3 + (col/3);
-                unordered_set<int> fpossibilities = intersection(rowPossibilities(fr, ioGrid).availableValue(),
+                fpossibilities = intersection(rowPossibilities(fr, ioGrid).availableValue(),
                                                                  regPossibilities(freg_index, ioGrid).availableValue());
                 int sreg_index = (sr/3)*3 + (col/3);
-                unordered_set<int> spossibilities = intersection(rowPossibilities(sr, ioGrid).availableValue(),
+                spossibilities = intersection(rowPossibilities(sr, ioGrid).availableValue(),
                                                                  regPossibilities(sreg_index, ioGrid).availableValue());
 
                 // Figure out if one Cell cannot take one of the Column's missing value-> she must take the other
                 bool changed_one = false;
-                unordered_set<int> availables = ve.availableValue();
+                availables = ve.availableValue();
                 for(unordered_set<int>::iterator it=availables.begin(), end=availables.end(); it!=end;it++){
+                        // Check if we are in a valid state
+                        if((fpossibilities.count(*it)==0) && (spossibilities.count(*it)==0)) {
+                                throw InvalidGridException();
+                        }
+
                         if(fpossibilities.count(*it)==0){ //we cannot put this value in first
                                 ioGrid.getCell(sr, col) = *it; //so we put it in second
                                 availables.erase(*it); // remove it from the set, so that only the other remains
@@ -109,6 +125,10 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                 // If we manage to set one, we can set the other with the remaining value
                 if(changed_one){
                         int last_missing_value = *(availables.begin());
+                        // Check if we are in a valid state
+                        if((fpossibilities.count(last_missing_value)==0) && (spossibilities.count(last_missing_value)==0)) {
+                                throw InvalidGridException();
+                        }
                         if(ioGrid.getCell(fr,col).isEmpty()){ //The first is the one that didn't get filled
                                 ioGrid.getCell(fr,col)=last_missing_value;
                         } else {
