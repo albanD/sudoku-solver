@@ -1,4 +1,12 @@
+#include <stdexcept>
+#include <utility>
+
 #include "RegionHolder.hpp"
+#include "Region.hpp"
+#include "Cell.hpp"
+#include "RowHolder.hpp"
+#include "ColumnHolder.hpp"
+#include "ValueEliminator.hpp"
 
 RegionHolder::RegionHolder(Region &region):
         NO(region.NO),
@@ -92,11 +100,11 @@ bool RegionHolder::isFull() const {
         return true;
 }
 
-pair<int,int> RegionHolder::valuePosition(unsigned char iValue) const{
+std::pair<int,int> RegionHolder::valuePosition(unsigned char iValue) const{
 
         for(int i=0; i<9; i++) {
                 if(getCell(i)==iValue) {
-                        return pair<int,int>(i/3,i%3);
+                        return std::pair<int,int>(i/3,i%3);
                 }
         }
 

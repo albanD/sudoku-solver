@@ -1,7 +1,10 @@
+#include <vector>
+
 #include "TwoOutOfThreeRowVisitor.hpp"
 #include "Grid.hpp"
 #include "RegionHolder.hpp"
-#include <vector>
+#include "TripleHolder.hpp"
+
 
 TwoOutOfThreeRowVisitor::TwoOutOfThreeRowVisitor(){}
 
@@ -9,7 +12,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
         bool changed = false;
         std::vector<RegionHolder> regions;
         std::vector<bool> presentInTriplet;
-        pair<int,int> position;
+        std::pair<int,int> position;
         int line, i;
         std::vector<bool>::iterator it;
 
@@ -34,7 +37,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
                                 if(regions[1].isValuePresent(value) && regions[2].isValuePresent(value)) {
                                         
                                         // find the line where it should be
-                                        presentInTriplet = vector<bool>(3, false);
+                                        presentInTriplet = std::vector<bool>(3, false);
                                         position = regions[1].valuePosition(value);
                                         presentInTriplet[position.first] = true;
                                         position = regions[2].valuePosition(value);
@@ -49,7 +52,7 @@ bool TwoOutOfThreeRowVisitor::Visit(Grid &ioGrid) const{
 
 
                                         // find the column where it should be
-                                        presentInTriplet = vector<bool>(3, false);
+                                        presentInTriplet = std::vector<bool>(3, false);
  
                                         // is there this value already in this column?
                                         for(i=0; i<3; ++i) {

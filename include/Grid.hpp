@@ -1,20 +1,20 @@
-#ifndef GRID
-#define GRID
-#include "Region.hpp"
-#include "RegionHolder.hpp"
-#include "Cell.hpp"
+#ifndef GRID_HPP
+#define GRID_HPP
+
 #include <array>
 #include <exception>
 
-using namespace std;
+#include "Region.hpp"
+#include "RegionHolder.hpp"
+#include "Cell.hpp"
 
 
 class Grid {
 private:
-        array<array<Region,3>,3> regions;
+        std::array<std::array<Region,3>,3> regions;
 
 public:
-        Grid(array<array<Region,3>,3> regions);
+        Grid(std::array<std::array<Region,3>,3> regions);
         bool isFull();
         RegionHolder NO();
         RegionHolder N();
@@ -40,7 +40,7 @@ public:
 };
 
 
-class InvalidGridException: public exception {
+class InvalidGridException: public std::exception {
 public:
         InvalidGridException() throw(){ };
         ~InvalidGridException() throw(){};

@@ -1,10 +1,11 @@
 #ifndef TRIPLETRIPLEHOLDER_HPP
 #define TRIPLETRIPLEHOLDER_HPP
 
+#include <vector>
+
 #include "TripleHolder.hpp"
 #include "RegionHolder.hpp"
 #include "ValueEliminator.hpp"
-#include <vector>
 
 class TripleTripleHolder {
 

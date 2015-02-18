@@ -1,10 +1,15 @@
+#include <unordered_set>
+
 #include "OnlySquareVisitor.hpp"
+#include "Grid.hpp"
+#include "ValueEliminator.hpp"
+#include "RegionHolder.hpp"
 
 
 bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
         bool changed_something = false;
 
-        unordered_set<int> fpossibilities, spossibilities, availables;
+        std::unordered_set<int> fpossibilities, spossibilities, availables;
 
         // Only Square on each row
         for(int row=0; row<9; ++row){
@@ -36,7 +41,7 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                 // Figure out if one Cell cannot take one of the row's missing value-> she must take the other
                 bool changed_one = false;
                 availables = ve.availableValue();
-                for(unordered_set<int>::iterator it=availables.begin(), end=availables.end(); it!=end;it++){
+                for(std::unordered_set<int>::iterator it=availables.begin(), end=availables.end(); it!=end;it++){
                         // Check if we are in a valid state
                         if((fpossibilities.count(*it)==0) && (spossibilities.count(*it)==0)) {
                                 throw InvalidGridException();
@@ -107,7 +112,7 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                 // Figure out if one Cell cannot take one of the Column's missing value-> she must take the other
                 bool changed_one = false;
                 availables = ve.availableValue();
-                for(unordered_set<int>::iterator it=availables.begin(), end=availables.end(); it!=end;it++){
+                for(std::unordered_set<int>::iterator it=availables.begin(), end=availables.end(); it!=end;it++){
                         // Check if we are in a valid state
                         if((fpossibilities.count(*it)==0) && (spossibilities.count(*it)==0)) {
                                 throw InvalidGridException();
@@ -146,9 +151,9 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
         return changed_something;
 }
 
-unordered_set<int> OnlySquareVisitor::intersection(unordered_set<int> a, unordered_set<int> b){
-        unordered_set<int> inter;
-        for(unordered_set<int>::iterator it=a.begin(),end=a.end(); it!=end;++it){
+std::unordered_set<int> OnlySquareVisitor::intersection(std::unordered_set<int> a, std::unordered_set<int> b){
+        std::unordered_set<int> inter;
+        for(std::unordered_set<int>::iterator it=a.begin(),end=a.end(); it!=end;++it){
                 if(b.count(*it)!=0){
                         inter.insert(*it);
                 }

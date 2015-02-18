@@ -1,5 +1,6 @@
 #include "TripleHolder.hpp"
-#include <iostream>
+#include "Cell.hpp"
+#include "ValueEliminator.hpp"
 
 TripleHolder::TripleHolder(Cell &cell1, Cell &cell2,Cell &cell3):
         first(cell1),

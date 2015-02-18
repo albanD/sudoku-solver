@@ -1,5 +1,8 @@
+#include <array>
+#include <iostream>
+#include <unordered_set>
+
 #include "Region.hpp"
-#include "ColumnHolder.hpp"
 #include "RegionHolder.hpp"
 #include "TripleTripleHolder.hpp"
 #include "Grid.hpp"
@@ -12,12 +15,8 @@
 #include "TwoOutOfThreeColumnVisitor.hpp"
 #include "TwoOutOfThreeRowVisitor.hpp"
 #include "FillAnySureVisitor.hpp"
-#include <array>
-#include <iostream>
 
-using namespace std;
-
-Grid::Grid(array<array<Region,3>,3> regions) {
+Grid::Grid(std::array<std::array<Region,3>,3> regions) {
         this->regions = regions;
 }
 
@@ -58,16 +57,16 @@ Cell& Grid::getCell(int row, int col){
 void Grid::show(){
         for(int i=0;i<9;++i){
                 if (i%3==0) {
-                        cout<<endl;
+                        std::cout<<std::endl;
                 }
                 for(int j=0;j<9;++j){
                         if (j%3==0) {
-                                cout<<"  ";
+                                std::cout<<"  ";
                         }
                         int value = getCell(i,j).value;
-                        cout<< value<<" ";
+                        std::cout<< value<<" ";
                 }
-                cout<<endl;
+                std::cout<<std::endl;
         }
 }
 
@@ -97,7 +96,7 @@ bool Grid::isConsistent() {
 }
 
 Grid Grid::getCopy() {
-        array<array<Region,3>,3> newRegions = array<array<Region,3>,3>();
+        std::array<std::array<Region,3>,3> newRegions = std::array<std::array<Region,3>,3>();
 
         for(int i=0; i<3; ++i) {
                 for(int j=0; j<3; ++j) {
@@ -136,7 +135,7 @@ void Grid::solve() {
         int reg_row,reg_col,cellInd;
         bool found,keepDoingSimple;
         ValueEliminator ve;
-        unordered_set<int> valuesToTest;
+        std::unordered_set<int> valuesToTest;
 
         keepDoingSimple = true;
         // try to fill the grid with simple methods
@@ -199,7 +198,7 @@ void Grid::solve() {
         valuesToTest = ve.availableValue();
 
         // try all possible values one by one
-        for(unordered_set<int>::iterator it = valuesToTest.begin(), end = valuesToTest.end(); it!=end; ++it) {
+        for(std::unordered_set<int>::iterator it = valuesToTest.begin(), end = valuesToTest.end(); it!=end; ++it) {
                 // create a new grid with the guess
                 Grid tempGrid = getCopy();
                 tempGrid.getRegion(reg_row*3+reg_col).getCell(cellInd) = *it;

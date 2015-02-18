@@ -1,5 +1,5 @@
-#ifndef VISITORS
-#define VISITORS
+#ifndef VISITORS_HPP
+#define VISITORS_HPP
 
 #include "Grid.hpp"
 

@@ -1,9 +1,8 @@
-#ifndef ONLYONECHOICEINCOLUMNVISITOR
-#define ONLYONECHOICEINCOLUMNVISITOR
+#ifndef ONLYONECHOICEINCOLUMNVISITOR_HPP
+#define ONLYONECHOICEINCOLUMNVISITOR_HPP
 
 #include "IVisitor.hpp"
 #include "Grid.hpp"
-#include "LastCellFinder.hpp"
 
 class OnlyOneChoiceInColumnVisitor : public IVisitor{
 public:

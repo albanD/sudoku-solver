@@ -1,9 +1,9 @@
-#include "Cell.hpp"
-#include <string>
-#include <array>
-
 #ifndef REGION_HPP
 #define REGION_HPP
+
+#include <string>
+
+#include "Cell.hpp"
 
 class Region {
 public:

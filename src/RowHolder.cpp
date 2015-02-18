@@ -1,4 +1,5 @@
 #include "RowHolder.hpp"
+#include "Cell.hpp"
 
 
 Cell &RowHolder::G(){return getFirst();}

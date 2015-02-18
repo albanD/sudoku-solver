@@ -1,20 +1,24 @@
+#include <vector>
+#include <utility>
+#include <stdexcept>
+
 #include "FillAnySureVisitor.hpp"
 #include "Grid.hpp"
 #include "RegionHolder.hpp"
-#include <vector>
+#include "TripleHolder.hpp"
 
 FillAnySureVisitor::FillAnySureVisitor(){}
 
 
 // For local use only
-pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles);
+std::pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles);
 
 bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         bool changed = false;
         std::vector<RegionHolder> regions;
         std::vector<std::vector<bool>> impossibles;
         std::vector<bool> presentInColumns;
-        pair<int,int> position;
+        std::pair<int,int> position;
         int col, i;
         std::vector<bool>::iterator it;
 
@@ -38,15 +42,15 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
 
                                 // find the col where it can be
                                 
-                                presentInColumns = vector<bool>(3, false);
+                                presentInColumns = std::vector<bool>(3, false);
                                 try {
                                         position = regions[1].valuePosition(value);
                                         presentInColumns[position.second] = true;
-                                } catch( invalid_argument const &e) {}
+                                } catch( std::invalid_argument const &e) {}
                                 try {
                                         position = regions[2].valuePosition(value);
                                         presentInColumns[position.second] = true;
-                                } catch( invalid_argument const &e) {}
+                                } catch( std::invalid_argument const &e) {}
 
 
 
@@ -58,10 +62,10 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
 
                                         // if the columns already have this value from another Region, pass
                                         if(presentInColumns[j]) {
-                                                impossibles.push_back(vector<bool>(3, true));
+                                                impossibles.push_back(std::vector<bool>(3, true));
                                                 continue;
                                         } else {
-                                                impossibles.push_back(vector<bool>(3, false));
+                                                impossibles.push_back(std::vector<bool>(3, false));
                                         }
                                         
                                         // Possible or not due to the value in another column of main_row
@@ -93,7 +97,7 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
 
                                                 ++changed;
                                         }
-                                } catch( invalid_argument const &e) {}
+                                } catch( std::invalid_argument const &e) {}
                         }
                 } 
 
@@ -103,15 +107,15 @@ bool FillAnySureVisitor::Visit(Grid &ioGrid) const{
         return changed;
 }
 
-pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles) {
-        pair<int,int> position(-1,-1);
+std::pair<int,int> findOnlyOneNegative(std::vector<std::vector<bool>> impossibles) {
+        std::pair<int,int> position(-1,-1);
 
         int totalNegative = 0;
         for(int i=0; i<3; ++i) {
                 for(int j=0; j<3; ++j) {
                         if(impossibles[i][j] == false) {
                                 totalNegative += 1;
-                                position = pair<int,int>(i,j);
+                                position = std::pair<int,int>(i,j);
                         }
                 }
         }

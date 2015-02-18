@@ -1,9 +1,9 @@
 #include <vector>
+
 #include "TripleTripleHolder.hpp"
 #include "RegionHolder.hpp"
 #include "TripleHolder.hpp"
-#include <iostream>
-using namespace std;
+#include "ValueEliminator.hpp"
 
 
 TripleTripleHolder::TripleTripleHolder(RegionHolder const &rh) {

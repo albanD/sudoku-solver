@@ -1,7 +1,7 @@
-#include "ValueEliminator.hpp"
-#include <iostream>
+#include <array>
+#include <unordered_set>
 
-using namespace std;
+#include "ValueEliminator.hpp"
 
 ValueEliminator::ValueEliminator(){
         seen = {false, false, false,
@@ -17,7 +17,7 @@ void ValueEliminator::flag(unsigned char iValue){
 
 int ValueEliminator::availableValues() const{
         int count = 0;
-        for(array<bool,9>::const_iterator it= seen.begin(), end=seen.end();it!=end;++it){
+        for(std::array<bool,9>::const_iterator it= seen.begin(), end=seen.end();it!=end;++it){
                 if(not *it){
                         count++;
                 }
@@ -26,9 +26,9 @@ int ValueEliminator::availableValues() const{
         return count;
 }
 
-unordered_set<int> ValueEliminator::availableValue() const{
+std::unordered_set<int> ValueEliminator::availableValue() const{
         bool at_least_one_free = false;
-        unordered_set<int> availables;
+        std::unordered_set<int> availables;
         for(int i=0;i<seen.size();++i){
                 if(not seen[i]){
                         availables.insert(i+1);
