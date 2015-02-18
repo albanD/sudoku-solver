@@ -22,11 +22,9 @@ Grid::Grid(array<array<Region,3>,3> regions) {
 }
 
 bool Grid::isFull(){
-        for(array<array<Region,3>,3>::iterator liter=regions.begin(),lend=regions.end();liter!=lend;++liter){
-                for(array<Region,3>::iterator citer=liter->begin(),cend=liter->end(); citer!=cend; ++citer){
-                        if (not citer->isFull()){
-                                return false;
-                        }
+        for(int i=0; i<9; ++i) {
+                if(!getRegion(i).isFull()) {
+                        return false;
                 }
         }
         return true;
@@ -113,4 +111,108 @@ Grid Grid::getCopy() {
 
         return Grid(newRegions);
 }
+
+void Grid::solve() {
+        // declare visitors
+        std::vector<IVisitor*> visitors = std::vector<IVisitor*>();
+        OnlyOneChoiceInRowVisitor onlyOneChoiceInRowVisitor = OnlyOneChoiceInRowVisitor();
+        visitors.push_back(&onlyOneChoiceInRowVisitor);
+        OnlyOneChoiceInColumnVisitor onlyOneChoiceInColumnVisitor = OnlyOneChoiceInColumnVisitor();
+        visitors.push_back(&onlyOneChoiceInColumnVisitor);
+        OnlyOneChoiceInRegionVisitor onlyOneChoiceInRegionVisitor = OnlyOneChoiceInRegionVisitor();
+        visitors.push_back(&onlyOneChoiceInRegionVisitor);
+        OnlySquareVisitor onlySquareVisitor = OnlySquareVisitor();
+        //visitors.push_back(&onlySquareVisitor);
+        TwoOutOfThreeRowVisitor twoOutOfThreeRowVisitor = TwoOutOfThreeRowVisitor();
+        visitors.push_back(&twoOutOfThreeRowVisitor);
+        TwoOutOfThreeColumnVisitor twoOutOfThreeColumnVisitor = TwoOutOfThreeColumnVisitor();
+        visitors.push_back(&twoOutOfThreeColumnVisitor);
+        FillAnySureVisitor fillAnySureVisitor = FillAnySureVisitor();
+        visitors.push_back(&fillAnySureVisitor);
+
+        int nbrVisitors = visitors.size();
+
+        int i,j;
+        int reg_row,reg_col,cellInd;
+        bool found,keepDoingSimple;
+        ValueEliminator ve;
+        unordered_set<int> valuesToTest;
+
+        keepDoingSimple = true;
+        // try to fill the grid with simple methods
+        while(keepDoingSimple) {
+                keepDoingSimple = false;
+                for(i=0; i<nbrVisitors; ++i) {
+                        keepDoingSimple |= accept(*(visitors[i]));
+                        // if we finished, return
+                        if(isFull()) {
+                                return;
+                        }
+                        // if we lost consistency, raise an error
+                        if(!isConsistent()) {
+                                throw InvalidGridException();
+                        }
+                }
+        }
+
+        // unable to keep filling the grid, take a guess
+        found = false;
+        for(i=2; i<10; ++i) {
+                // for any possible number of possible values for a cell
+                for(reg_row=0; reg_row<3; ++reg_row) {
+                        // for row of region
+                        for(reg_col=0; reg_col<3; ++reg_col) {
+                                // for col of region
+                                // if region is not full
+                                if(getRegion(reg_row*3+reg_col).isFull()) {continue;}
+
+                                for(cellInd=0; cellInd<9; ++cellInd) {
+                                        //for each empty Cell of the region
+                                        if(getRegion(reg_row*3+reg_col).getCell(cellInd).value != 0) {continue;}
+
+                                        // find the number of possible values
+                                        ve = ValueEliminator();
+                                        // flag values present in the region
+                                        TripleTripleHolder(getRegion(reg_row*3+reg_col)).flagValues(ve);
+                                        // flag values present in the line
+                                        TripleTripleHolder(getRegion(reg_row*3+reg_col).getRow(cellInd/3), getRegion(reg_row*3+(reg_col+1)%3).getRow(cellInd/3), getRegion(reg_row*3+(reg_col+2)%3).getRow(cellInd/3)).flagValues(ve);
+                                        // flag values present in the column
+                                        TripleTripleHolder(getRegion(reg_row*3+reg_col).getColumn(cellInd%3), getRegion(((reg_row+1)%3)*3+reg_col).getColumn(cellInd%3), getRegion(((reg_row+2)%3)*3+reg_col).getColumn(cellInd%3)).flagValues(ve);
+                                        
+                                        if(ve.availableValues()==i) {
+                                                found = true;
+                                                break;
+                                        }
+                                }
+                                if(found) {break;}
+                        }
+                        if(found) {break;}
+                }
+                if(found) {break;}
+        }
+
+        // Check if the grid is correct
+        if(i==10) {
+                throw InvalidGridException();
+        }
+
+        valuesToTest = ve.availableValue();
+
+        // try all possible values one by one
+        for(unordered_set<int>::iterator it = valuesToTest.begin(), end = valuesToTest.end(); it!=end; ++it) {
+                // create a new grid with the guess
+                Grid tempGrid = getCopy();
+                tempGrid.getRegion(reg_row*3+reg_col).getCell(cellInd) = *it;
+                
+                try {
+                        // try to solve the grid with the guess
+                        tempGrid.solve();
+                        *this = tempGrid;
+                        break;
+                } catch(InvalidGridException const &e) {}
+        }
+
+        if(!isFull() || !isConsistent()) {
+                throw InvalidGridException();
+        }
 }

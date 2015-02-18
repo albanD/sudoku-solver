@@ -36,6 +36,10 @@ public:
 
         Grid getCopy();
 
+        void solve();
+};
+
+
 class InvalidGridException: public exception {
 public:
         InvalidGridException() throw(){ };

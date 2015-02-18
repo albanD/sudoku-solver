@@ -365,5 +365,25 @@ int check_part_4() {
     cout<<"Testing if grid is consistent, should be 0, result: "<<myGrid.isConsistent()<<endl;
     errors += (myGrid.isConsistent()!=0);
 
+    content_col= {
+        Region("6---359--"), Region("72-169-8-"), Region("-318-----"),
+        Region("-56--134-"), Region("-9----5--"), Region("----7-2--"),
+        Region("--8-7----"), Region("6-3-5----"), Region("75---3-8-")
+    };
+    content_col= {
+        Region("8----3-7-"), Region("---6---9-"), Region("------2--"),
+        Region("-5-------"), Region("--7-451--"), Region("---7---3-"),
+        Region("--1--8-9-"), Region("---5-----"), Region("-68-1-4--")
+    };
+
+    Grid myGrid2(content_col);
+
+    cout<<"Trying to solve a full grid with the solve method..."<<endl;
+    myGrid2.solve();
+    myGrid2.show();
+    cout<<"Is grid full (expected 1): "<<myGrid2.isFull()<<endl;
+    errors += (myGrid2.isFull()!=1);
+
+
     return errors;
 }
