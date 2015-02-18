@@ -17,7 +17,8 @@ SOURCES_TEST = $(wildcard test/*.cpp)
 INCLUDE_TEST = test $(INCLUDE_LIB)
 INCLUDE_TEST_ARG = $(foreach d, $(INCLUDE_TEST), -I$d)
 OBJECTS_TEST = $(SOURCES_TEST:.cpp=.o)
-CFLAGS = -std=c++11 -c -Wall -g -O $(INCLUDE_TEST_ARG)
+all: CFLAGS = -std=c++11 -c -Wall $(INCLUDE_TEST_ARG)
+debug: CFLAGS = -std=c++11 -c -Wall -g $(INCLUDE_TEST_ARG)
 LDFLAGS = -Lbuild -lSudokuSolver -lstdc++
 
 LDDEBUGFLAGS = -lstdc++ -g -gdwarf-3
