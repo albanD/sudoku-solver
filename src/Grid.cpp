@@ -122,7 +122,7 @@ void Grid::solve() {
         OnlyOneChoiceInRegionVisitor onlyOneChoiceInRegionVisitor = OnlyOneChoiceInRegionVisitor();
         visitors.push_back(&onlyOneChoiceInRegionVisitor);
         OnlySquareVisitor onlySquareVisitor = OnlySquareVisitor();
-        //visitors.push_back(&onlySquareVisitor);
+        visitors.push_back(&onlySquareVisitor);
         TwoOutOfThreeRowVisitor twoOutOfThreeRowVisitor = TwoOutOfThreeRowVisitor();
         visitors.push_back(&twoOutOfThreeRowVisitor);
         TwoOutOfThreeColumnVisitor twoOutOfThreeColumnVisitor = TwoOutOfThreeColumnVisitor();

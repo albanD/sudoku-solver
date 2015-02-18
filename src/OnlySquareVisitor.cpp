@@ -72,6 +72,11 @@ bool OnlySquareVisitor::Visit(Grid &ioGrid) const{
                 changed_something|= changed_one;
         }
 
+        // if we lost consistency while working on the rows catch it before it make the work on columns crash
+        if(!ioGrid.isConsistent()) {
+                throw InvalidGridException();
+        }
+
         // Only Square on each Column
         for(int col=0; col<9; ++col){
                 // ensure that the rule is applicable

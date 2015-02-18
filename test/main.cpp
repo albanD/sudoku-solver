@@ -379,10 +379,15 @@ int check_part_4() {
     Grid myGrid2(content_col);
 
     cout<<"Trying to solve a full grid with the solve method..."<<endl;
+    cout<<"Before:";
+    myGrid2.show();
     myGrid2.solve();
+    cout<<endl<<"After:";
     myGrid2.show();
     cout<<"Is grid full (expected 1): "<<myGrid2.isFull()<<endl;
+    cout<<"Is grid consistent (expected 1): "<<myGrid2.isConsistent()<<endl;
     errors += (myGrid2.isFull()!=1);
+    errors += (myGrid2.isConsistent()!=1);
 
 
     return errors;
