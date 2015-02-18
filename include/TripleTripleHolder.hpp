@@ -3,6 +3,7 @@
 
 #include "TripleHolder.hpp"
 #include "RegionHolder.hpp"
+#include "ValueEliminator.hpp"
 #include <vector>
 
 class TripleTripleHolder {
@@ -14,6 +15,8 @@ public:
         TripleTripleHolder(TripleHolder const &th1, TripleHolder const &th2, TripleHolder const &th3);
         TripleTripleHolder(RegionHolder const &rg);
         bool isConsistent() const;
+
+        void flagValues(ValueEliminator &ve);
 };
 
 #endif

@@ -39,3 +39,9 @@ bool TripleTripleHolder::isConsistent() const{
 
         return true;
 }
+
+void TripleTripleHolder::flagValues(ValueEliminator &ve) {
+        for(int i=0; i<3; ++i) {
+                tripleHolders[i].flagValues(ve);
+        }
+}
