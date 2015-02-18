@@ -9,7 +9,8 @@ SOURCES_LIB = $(wildcard src/*.cpp)
 INCLUDE_LIB = include
 INCLUDE_LIB_ARG = $(foreach d, $(INCLUDE_LIB), -I$d)
 OBJECTS_LIB = $(SOURCES_LIB:.cpp=.o)
-CSHAREDFLAGS = -std=c++11 -c -fPIC $(INCLUDE_LIB_ARG)
+all: CSHAREDFLAGS = -std=c++11 -c -fPIC $(INCLUDE_LIB_ARG)
+debug: CSHAREDFLAGS = -std=c++11 -c -g $(INCLUDE_LIB_ARG)
 LDSHAREDFLAGS = -shared
 
 SOURCES_TEST = $(wildcard test/*.cpp)
