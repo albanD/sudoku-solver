@@ -18,7 +18,7 @@ public:
         Cell C;
         Region(std::string init_string);
         Region();
-        bool isFull();
+        bool isFull() const;
 private:
         Cell generate_cell(std::string::iterator iter);
 

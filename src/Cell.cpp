@@ -13,7 +13,7 @@ Cell::Cell(int x){
     value = x;
 }
 
-bool Cell::isEmpty(){
+bool Cell::isEmpty() const{
     return value==0;
 }
 
@@ -33,6 +33,6 @@ Cell::operator long unsigned int () const{
 }
 
 
-bool Cell::operator ==(unsigned char iValue){
+bool Cell::operator ==(unsigned char iValue) const{
     return (unsigned char) value == iValue;
 }

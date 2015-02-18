@@ -97,22 +97,22 @@ int check_full_sudoku(){
 
     Grid myGrid_row(content);
     OnlyOneChoiceInRowVisitor row_visitor;
-    myGrid_row.accept(&row_visitor);
-    cout<<"Row - Previously empty Cell is now: "<<myGrid_row.SE().getSE()->value<<" should be 2"<<endl;
-    errors += (myGrid_row.SE().getSE()->value!=2);
+    myGrid_row.accept(row_visitor);
+    cout<<"Row - Previously empty Cell is now: "<<myGrid_row.SE().getSE().value<<" should be 2"<<endl;
+    errors += (myGrid_row.SE().getSE().value!=2);
 
 
     Grid myGrid_col(content);
     OnlyOneChoiceInColumnVisitor col_visitor;
-    myGrid_col.accept(&col_visitor);
-    cout<<"Col - Previously empty Cell is now: "<<myGrid_col.SE().getSE()->value<<" should be 2"<<endl;
-    errors += (myGrid_col.SE().getSE()->value!=2);
+    myGrid_col.accept(col_visitor);
+    cout<<"Col - Previously empty Cell is now: "<<myGrid_col.SE().getSE().value<<" should be 2"<<endl;
+    errors += (myGrid_col.SE().getSE().value!=2);
 
     Grid myGrid_reg(content);
     OnlyOneChoiceInRegionVisitor reg_visitor;
-    myGrid_reg.accept(&reg_visitor);
-    cout<<"Reg - Previously empty Cell is now: "<<myGrid_reg.SE().getSE()->value<<" should be 2"<<endl;
-    errors += (myGrid_reg.SE().getSE()->value!=2);
+    myGrid_reg.accept(reg_visitor);
+    cout<<"Reg - Previously empty Cell is now: "<<myGrid_reg.SE().getSE().value<<" should be 2"<<endl;
+    errors += (myGrid_reg.SE().getSE().value!=2);
 
 
     return errors;
@@ -131,11 +131,11 @@ int check_intermediary(){
         Region("763928-54"), Region("534671938"), Region("18935467-")
     };
     Grid myGrid_square_row(content_row);
-    myGrid_square_row.accept(&square_visitor);
-    cout<<"OneSquareRow - Previously empty bottom right Cell is now: "<<myGrid_square_row.SE().getSE()->value<<" should be 2"<<endl;
-    cout<<"OneSquareRow - Previously empty bottom left Cell is now: "<<myGrid_square_row.SO().getSO()->value<<" should be 1"<<endl;
-    errors += (myGrid_square_row.SE().getSE()->value!=2);
-    errors += (myGrid_square_row.SO().getSO()->value!=1);
+    myGrid_square_row.accept(square_visitor);
+    cout<<"OneSquareRow - Previously empty bottom right Cell is now: "<<myGrid_square_row.SE().getSE().value<<" should be 2"<<endl;
+    cout<<"OneSquareRow - Previously empty bottom left Cell is now: "<<myGrid_square_row.SO().getSO().value<<" should be 1"<<endl;
+    errors += (myGrid_square_row.SE().getSE().value!=2);
+    errors += (myGrid_square_row.SO().getSO().value!=1);
 
     //We are missing a 2 at the bottom right and a 8 at the bottom right of E
     array<array<Region,3>,3> content_col= {
@@ -144,11 +144,11 @@ int check_intermediary(){
         Region("763928154"), Region("534671938"), Region("18935467-")
     };
     Grid myGrid_square_col(content_col);
-    myGrid_square_col.accept(&square_visitor);
-    cout<<"OneSquareCol - Previously empty bottom right Cell is now: "<<myGrid_square_col.SE().getSE()->value<<" should be 2"<<endl;
-    cout<<"OneSquareCol - Previously empty mid-bottom right Cell is now: "<<myGrid_square_col.E().getSE()->value<<" should be 8"<<endl;
-    errors += (myGrid_square_col.SE().getSE()->value!=2);
-    errors += (myGrid_square_col.E().getSE()->value!=8);
+    myGrid_square_col.accept(square_visitor);
+    cout<<"OneSquareCol - Previously empty bottom right Cell is now: "<<myGrid_square_col.SE().getSE().value<<" should be 2"<<endl;
+    cout<<"OneSquareCol - Previously empty mid-bottom right Cell is now: "<<myGrid_square_col.E().getSE().value<<" should be 8"<<endl;
+    errors += (myGrid_square_col.SE().getSE().value!=2);
+    errors += (myGrid_square_col.E().getSE().value!=8);
 
 
     return errors;
@@ -210,20 +210,21 @@ int check_cells_methods() {
 
     Cell myCell3 = Cell(2);
 
-    TripleHolder triplet(&myCell1, &myCell2, &myCell3);
-    cout << "Value of the first cell of the triplet is: "<<triplet.getFirst()->value<<" should be 8"<<endl;
-    errors += (triplet.getFirst()->value!=8);
+    TripleHolder triplet(myCell1, myCell2, myCell3);
+    cout << "Value of the first cell of the triplet is: "<<triplet.getFirst().value<<" should be 8"<<endl;
+    errors += (triplet.getFirst().value!=8);
 
     cout << "My triplet is full: "<<triplet.isFull()<<", should be 1"<<endl;
+    errors += (triplet.isFull()!=1);
 
-    RowHolder row(&myCell1, &myCell2, &myCell3);
-    cout << "Value of the left cell of the row is: "<<row.G()->value<<" should be 8"<<endl;
-    errors += (row.G()->value!=8);
+    RowHolder row(myCell1, myCell2, myCell3);
+    cout << "Value of the left cell of the row is: "<<row.G().value<<" should be 8"<<endl;
+    errors += (row.G().value!=8);
 
 
-    ColumnHolder col(&myCell1, &myCell2, &myCell3);
-    cout << "Value of the top cell of the col is: "<<col.T()->value<<" should be 8"<<endl;
-    errors += (col.T()->value!=8);
+    ColumnHolder col(myCell1, myCell2, myCell3);
+    cout << "Value of the top cell of the col is: "<<col.T().value<<" should be 8"<<endl;
+    errors += (col.T().value!=8);
 
 
     return errors;
@@ -263,8 +264,8 @@ int check_region_methods() {
     errors += (myRegion2.isFull()!=false);
 
     RegionHolder rh = RegionHolder(myRegion2);
-    cout<< "Topmost-leftmost of the region holded is " << rh.getNO()->value << " should be 1"<<endl;
-    errors += (rh.getNO()->value!=1);
+    cout<< "Topmost-leftmost of the region holded is " << rh.getNO().value << " should be 1"<<endl;
+    errors += (rh.getNO().value!=1);
 
 
     return errors;
@@ -286,20 +287,20 @@ int check_two_out_of_three() {
     };
     Grid myGrid(content_row);
 
-    bool res = myGrid.accept(&twoOutOfThreeRowVisitor);
+    bool res = myGrid.accept(twoOutOfThreeRowVisitor);
     
     cout<<"Two out of three row visitor shoud have filled something (return 1), it returned: "<<res<<endl;
     errors += (res!=1);
-    cout<<"Top-left of the top-right region should be filled with 3, it is: "<<myGrid.NE().getNO()->value<<endl;
-    errors += (myGrid.NE().getNO()->value!=3);
+    cout<<"Top-left of the top-right region should be filled with 3, it is: "<<myGrid.NE().getNO().value<<endl;
+    errors += (myGrid.NE().getNO().value!=3);
 
     myGrid = Grid(content_row);
-    res = myGrid.accept(&twoOutOfThreeColumnVisitor);
+    res = myGrid.accept(twoOutOfThreeColumnVisitor);
     
     cout<<"Two out of three column visitor shoud have filled something (return 1), it returned: "<<res<<endl;
     errors += (res!=1);
-    cout<<"Middle-left of the middle-top region should be filled with 7, it is: "<<myGrid.N().getO()->value<<endl;
-    errors += (myGrid.N().getO()->value!=7);
+    cout<<"Middle-left of the middle-top region should be filled with 7, it is: "<<myGrid.N().getO().value<<endl;
+    errors += (myGrid.N().getO().value!=7);
 
     return errors;
 }
@@ -326,13 +327,13 @@ int check_end_part_3() {
     bool somethingDone = true;
     while (somethingDone) {
         somethingDone = false;
-        somethingDone |= myGrid.accept(&onlyOneChoiceInRowVisitor);
-        somethingDone |= myGrid.accept(&onlyOneChoiceInColumnVisitor);
-        somethingDone |= myGrid.accept(&onlyOneChoiceInRegionVisitor);
-        somethingDone |= myGrid.accept(&onlySquareVisitor);
-        somethingDone |= myGrid.accept(&twoOutOfThreeRowVisitor);
-        somethingDone |= myGrid.accept(&twoOutOfThreeColumnVisitor);
-        somethingDone |= myGrid.accept(&fillAnySureVisitor);
+        somethingDone |= myGrid.accept(onlyOneChoiceInRowVisitor);
+        somethingDone |= myGrid.accept(onlyOneChoiceInColumnVisitor);
+        somethingDone |= myGrid.accept(onlyOneChoiceInRegionVisitor);
+        somethingDone |= myGrid.accept(onlySquareVisitor);
+        somethingDone |= myGrid.accept(twoOutOfThreeRowVisitor);
+        somethingDone |= myGrid.accept(twoOutOfThreeColumnVisitor);
+        somethingDone |= myGrid.accept(fillAnySureVisitor);
     }
     myGrid.show();
 

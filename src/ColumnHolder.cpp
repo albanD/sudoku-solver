@@ -1,6 +1,6 @@
 #include "ColumnHolder.hpp"
 
 
-Cell* const ColumnHolder::T(){return getFirst();}
-Cell* const ColumnHolder::C(){return getSecond();}
-Cell* const ColumnHolder::B(){return getThird();}
+Cell &ColumnHolder::T(){return getFirst();}
+Cell &ColumnHolder::C(){return getSecond();}
+Cell &ColumnHolder::B(){return getThird();}

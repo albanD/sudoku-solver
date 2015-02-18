@@ -9,11 +9,11 @@ public:
 
     Cell();
     Cell(int x);
-    bool isEmpty();
+    bool isEmpty() const;
     Cell & operator =(unsigned char iValue);
     operator unsigned char () const;
     operator long unsigned int () const;
-    bool operator ==(unsigned char iValue);
+    bool operator ==(unsigned char iValue) const;
 };
 
 #endif

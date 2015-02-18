@@ -41,7 +41,7 @@ Cell Region::generate_cell(string::iterator iter) {
         return new_cell;
 }
 
-bool Region::isFull(){
+bool Region::isFull() const{
         bool has_empty_cases = false;
         has_empty_cases = has_empty_cases || NO.isEmpty() || N.isEmpty() || NE.isEmpty();
         has_empty_cases = has_empty_cases || O.isEmpty() || C.isEmpty() || E.isEmpty();

@@ -21,12 +21,12 @@ bool LastCellFinder::fill(){
         int nb_empty = 0;
         for(int i=0;i<3;++i){
                 for(int j=0;j<3;++j){
-                        if (holders[i].getCell(j)->isEmpty()){
+                        if (holders[i].getCell(j).isEmpty()){
                                 empty_holder = i;
                                 empty_pos = j;
                                 nb_empty++;
                         } else{
-                                int pos =(int) *(holders[i].getCell(j)) -1;
+                                int pos =(int) holders[i].getCell(j) -1;
                                 index[pos] = true;
                         }
 
@@ -50,7 +50,7 @@ bool LastCellFinder::fill(){
                 missing_value++;
         }
 
-        *(holders[empty_holder].getCell(empty_pos))=missing_value;
+        holders[empty_holder].getCell(empty_pos)=missing_value;
 
         return true;
 

@@ -39,7 +39,7 @@ RegionHolder Grid::getRegion(int reg_index){
         return RegionHolder(regions[main_row][main_col]);
 }
 
-Cell* Grid::getCell(int row, int col){
+Cell& Grid::getCell(int row, int col){
         int main_row = row /3;
         int main_col = col /3;
         int sub_row = row - 3* main_row;
@@ -57,13 +57,13 @@ void Grid::show(){
                         if (j%3==0) {
                                 cout<<"  ";
                         }
-                        int value = getCell(i,j)->value;
+                        int value = getCell(i,j).value;
                         cout<< value<<" ";
                 }
                 cout<<endl;
         }
 }
 
-bool Grid::accept(IVisitor* v){
-        return v->Visit(*this);
+bool Grid::accept(IVisitor& v){
+        return v.Visit(*this);
 };
