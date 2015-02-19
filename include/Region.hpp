@@ -1,9 +1,9 @@
-#include "Cell.hpp"
-#include <string>
-#include <array>
-
 #ifndef REGION_HPP
 #define REGION_HPP
+
+#include <string>
+
+#include "Cell.hpp"
 
 class Region {
 public:
@@ -20,7 +20,7 @@ public:
         Region();
         bool isFull() const;
 private:
-        Cell generate_cell(std::string::iterator iter);
+        Cell generate_cell(char s_value);
 
 };
 

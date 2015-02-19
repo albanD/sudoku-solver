@@ -1,11 +1,11 @@
-#include "LastCellFinder.hpp"
-
-#include "TripleHolder.hpp"
 #include <array>
+#include <vector>
 
-using namespace std;
+#include "LastCellFinder.hpp"
+#include "TripleHolder.hpp"
 
 LastCellFinder::LastCellFinder(TripleHolder h1, TripleHolder h2, TripleHolder h3){
+        holders = std::vector<TripleHolder>();
         holders.push_back(h1);
         holders.push_back(h2);
         holders.push_back(h3);
@@ -13,7 +13,7 @@ LastCellFinder::LastCellFinder(TripleHolder h1, TripleHolder h2, TripleHolder h3
 
 bool LastCellFinder::fill(){
         // Index of the value that we have already filled, stock where we can find them
-        array<bool,9> index = {false,false,false,
+        std::array<bool,9> index = {false,false,false,
                                false,false,false,
                                false,false,false};
         int empty_holder;

@@ -1,9 +1,8 @@
-#ifndef ONLYONECHOICEINREGIONVISITOR
-#define ONLYONECHOICEINREGIONVISITOR
+#ifndef ONLYONECHOICEINREGIONVISITOR_HPP
+#define ONLYONECHOICEINREGIONVISITOR_HPP
 
 #include "IVisitor.hpp"
 #include "Grid.hpp"
-#include "LastCellFinder.hpp"
 
 class OnlyOneChoiceInRegionVisitor : public IVisitor{
 public:

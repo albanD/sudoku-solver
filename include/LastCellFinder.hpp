@@ -1,14 +1,13 @@
-#ifndef LAST_CELL_FINDER
-#define LAST_CELL_FINDER
+#ifndef LAST_CELL_FINDER_HPP
+#define LAST_CELL_FINDER_HPP
 
-#include "TripleHolder.hpp"
 #include <vector>
 
-using namespace std;
+#include "TripleHolder.hpp"
 
 class LastCellFinder{
 private:
-        vector<TripleHolder> holders;
+        std::vector<TripleHolder> holders;
 
 public:
         LastCellFinder(TripleHolder h1, TripleHolder h2, TripleHolder h3);

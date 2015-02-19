@@ -1,4 +1,7 @@
 #include "OnlyOneChoiceInRowVisitor.hpp"
+#include "Grid.hpp"
+#include "RegionHolder.hpp"
+#include "LastCellFinder.hpp"
 
 bool OnlyOneChoiceInRowVisitor::Visit(Grid &ioGrid) const{
         bool changed = false;

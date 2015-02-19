@@ -1,6 +1,8 @@
 #ifndef REGIONHOLDER_HPP
 #define REGIONHOLDER_HPP
 
+#include <utility>
+
 #include "Cell.hpp"
 #include "RowHolder.hpp"
 #include "ColumnHolder.hpp"
@@ -34,7 +36,8 @@ public:
 
         void flagValues(ValueEliminator &ve) const;
         bool isValuePresent(unsigned char iValue) const;
-        pair<int,int> valuePosition(unsigned char iValue) const;
+        bool isFull() const;
+        std::pair<int,int> valuePosition(unsigned char iValue) const;
         
 private:
         Cell & NO;

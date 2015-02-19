@@ -1,4 +1,7 @@
 #include "OnlyOneChoiceInRegionVisitor.hpp"
+#include "Grid.hpp"
+#include "RegionHolder.hpp"
+#include "LastCellFinder.hpp"
 
 
 bool OnlyOneChoiceInRegionVisitor::Visit(Grid &ioGrid) const{

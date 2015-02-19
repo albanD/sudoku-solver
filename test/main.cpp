@@ -25,6 +25,7 @@ int check_full_sudoku();
 int check_intermediary();
 int check_two_out_of_three();
 int check_end_part_3();
+int check_part_4();
 
 int main() {
     int error_happened = 0;
@@ -49,6 +50,9 @@ int main() {
 
     cout<<endl<<"Starting to check all the simple methods on the given test grid:"<<endl;
     error_happened += check_end_part_3();
+
+    cout<<endl<<"Starting to check elements for part 4:"<<endl;
+    error_happened += check_part_4();
 
     return error_happened;
 }
@@ -92,7 +96,7 @@ int check_full_sudoku(){
     array<array<Region,3>,3> content= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("216495738"),
-        Region("763928154"), Region("534671938"), Region("18935467-")
+        Region("763928154"), Region("524671938"), Region("18935467-")
     };
 
     Grid myGrid_row(content);
@@ -128,7 +132,7 @@ int check_intermediary(){
     array<array<Region,3>,3> content_row= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("216495738"),
-        Region("763928-54"), Region("534671938"), Region("18935467-")
+        Region("763928-54"), Region("524671938"), Region("18935467-")
     };
     Grid myGrid_square_row(content_row);
     myGrid_square_row.accept(square_visitor);
@@ -141,7 +145,7 @@ int check_intermediary(){
     array<array<Region,3>,3> content_col= {
         Region("295431876"), Region("743865192"), Region("861927543"),
         Region("387612549"), Region("459387216"), Region("21649573-"),
-        Region("763928154"), Region("534671938"), Region("18935467-")
+        Region("763928154"), Region("524671938"), Region("18935467-")
     };
     Grid myGrid_square_col(content_col);
     myGrid_square_col.accept(square_visitor);
@@ -245,7 +249,7 @@ int check_region_methods() {
     // Check that an exception triggers
     bool exception_raised = false;
     try {
-        Region myRegion = Region("12345-------");
+        myRegion = Region("12345-------");
         myRegion.isFull(); // Use the myRegion variable to prevent compilation warning
     } catch(invalid_argument const& e) {
         cout << "Caught a Region exception as expected" <<endl;
@@ -322,6 +326,7 @@ int check_end_part_3() {
         Region("782----5-"), Region("---------"), Region("-9----726"),
         Region("24-8--6-5"), Region("1----48--"), Region("8--5-----")
     };
+
     Grid myGrid(content_row);
 
     bool somethingDone = true;
@@ -333,12 +338,57 @@ int check_end_part_3() {
         somethingDone |= myGrid.accept(onlySquareVisitor);
         somethingDone |= myGrid.accept(twoOutOfThreeRowVisitor);
         somethingDone |= myGrid.accept(twoOutOfThreeColumnVisitor);
-        somethingDone |= myGrid.accept(fillAnySureVisitor);
+        //somethingDone |= myGrid.accept(fillAnySureVisitor);
     }
-    myGrid.show();
 
     cout<<"Simple method should have filled the grid. Grid.isFull="<<myGrid.isFull()<<" (1 expected)"<<endl;
     cout<<"Does not trigger any error because the grid is not duable with these methods..."<<endl;
+
+    return errors;
+}
+
+int check_part_4() {
+    int errors = 0;
+
+    array<array<Region,3>,3> content_col= {
+        Region("295431876"), Region("743865192"), Region("861927543"),
+        Region("387612549"), Region("459387216"), Region("21649573-"),
+        Region("763928154"), Region("524671938"), Region("18935467-")
+    };
+    Grid myGrid(content_col);
+
+    cout<<"Testing if grid is consistent, should be 1, result: "<<myGrid.isConsistent()<<endl;
+    errors += (myGrid.isConsistent()!=1);
+
+    cout<<"Breaking the grid consistency."<<endl;
+    myGrid.getCell(0,1) = 2;
+    cout<<"Testing if grid is consistent, should be 0, result: "<<myGrid.isConsistent()<<endl;
+    errors += (myGrid.isConsistent()!=0);
+
+    content_col= {
+        Region("6---359--"), Region("72-169-8-"), Region("-318-----"),
+        Region("-56--134-"), Region("-9----5--"), Region("----7-2--"),
+        Region("--8-7----"), Region("6-3-5----"), Region("75---3-8-")
+    };
+    content_col= {
+        Region("8----3-7-"), Region("---6---9-"), Region("------2--"),
+        Region("-5-------"), Region("--7-451--"), Region("---7---3-"),
+        Region("--1--8-9-"), Region("---5-----"), Region("-68-1-4--")
+    };
+
+    Grid myGrid2(content_col);
+
+    cout<<"Trying to solve a full grid with the solve method..."<<endl;
+    cout<<"Before:";
+    myGrid2.show();
+    myGrid2.solve();
+    cout<<endl<<"After:";
+    myGrid2.show();
+    cout<<"Is grid full (expected 1): "<<myGrid2.isFull()<<endl;
+    cout<<"Is grid consistent (expected 1): "<<myGrid2.isConsistent()<<endl;
+    errors += (myGrid2.isFull()!=1);
+    errors += (myGrid2.isConsistent()!=1);
+
 
     return errors;
 }

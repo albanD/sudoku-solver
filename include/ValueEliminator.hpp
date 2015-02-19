@@ -1,22 +1,22 @@
-#ifndef VALUEELIMINATOR
-#define VALUEELIMINATOR
+#ifndef VALUEELIMINATOR_HPP
+#define VALUEELIMINATOR_HPP
+
 #include <array>
 #include <unordered_set>
 #include <exception>
 
-using namespace std;
 
 class ValueEliminator{
 private:
-        array<bool,9> seen;
+        std::array<bool,9> seen;
 public:
         ValueEliminator();
         void flag(unsigned char iValue);
         int availableValues() const;
-        unordered_set<int> availableValue() const;
+        std::unordered_set<int> availableValue() const;
 };
 
-class NoAvailableValueException : public exception{
+class NoAvailableValueException : public std::exception{
 public:
         NoAvailableValueException() throw(){ };
         ~NoAvailableValueException() throw(){};

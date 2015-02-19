@@ -9,14 +9,16 @@ SOURCES_LIB = $(wildcard src/*.cpp)
 INCLUDE_LIB = include
 INCLUDE_LIB_ARG = $(foreach d, $(INCLUDE_LIB), -I$d)
 OBJECTS_LIB = $(SOURCES_LIB:.cpp=.o)
-CSHAREDFLAGS = -std=c++11 -c -fPIC $(INCLUDE_LIB_ARG)
+all: CSHAREDFLAGS = -std=c++11 -c -fPIC $(INCLUDE_LIB_ARG)
+debug: CSHAREDFLAGS = -std=c++11 -c -g $(INCLUDE_LIB_ARG)
 LDSHAREDFLAGS = -shared
 
 SOURCES_TEST = $(wildcard test/*.cpp)
 INCLUDE_TEST = test $(INCLUDE_LIB)
 INCLUDE_TEST_ARG = $(foreach d, $(INCLUDE_TEST), -I$d)
 OBJECTS_TEST = $(SOURCES_TEST:.cpp=.o)
-CFLAGS = -std=c++11 -c -Wall -g -O $(INCLUDE_TEST_ARG)
+all: CFLAGS = -std=c++11 -c -Wall $(INCLUDE_TEST_ARG)
+debug: CFLAGS = -std=c++11 -c -Wall -g $(INCLUDE_TEST_ARG)
 LDFLAGS = -Lbuild -lSudokuSolver -lstdc++
 
 LDDEBUGFLAGS = -lstdc++ -g -gdwarf-3
